@@ -1,0 +1,332 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Press — Tester Tech</title>
+  <meta name="description" content="Tester Tech press room — latest announcements, media resources, brand assets and press contact." />
+  <meta name="theme-color" content="#080705" />
+
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%23080705'/%3E%3Ccircle cx='16' cy='16' r='6' fill='%23d8b981'/%3E%3C/svg%3E" />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,500;0,9..144,600;1,9..144,300;1,9..144,500&family=Familjen+Grotesk:wght@400;500;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet" />
+
+  <link rel="stylesheet" href="css/style.css" />
+  <link rel="stylesheet" href="css/cart.css" />
+
+  <style>
+    :root { --tt-panel:#0c0c0c; --tt-panel-2:#121110; --tt-radius:16px; --tt-radius-sm:11px; --shadow:0 24px 60px -28px rgba(0,0,0,.9); --ship:#5fd0a8; }
+    body { overflow-x: hidden; }
+    .tt-wrap { max-width: 1180px; margin: 0 auto; padding-inline: clamp(1.1rem, 4vw, 3rem); }
+    .tt-reveal { opacity: 1; }
+    .js .tt-reveal { opacity: 0; transform: translateY(28px); transition: opacity .8s var(--ease), transform .8s var(--ease); }
+    .js .tt-reveal.in { opacity: 1; transform: none; }
+    a:focus-visible, button:focus-visible { outline: 2px solid var(--gold-bright); outline-offset: 3px; border-radius: 4px; }
+
+    .tt-nav { position: sticky; top: 0; z-index: 100; background: rgba(6,5,4,.72); backdrop-filter: blur(16px) saturate(120%); -webkit-backdrop-filter: blur(16px) saturate(120%); border-bottom: 1px solid transparent; transition: border-color .4s var(--ease), background .4s var(--ease); }
+    .tt-nav.scrolled { border-color: var(--line-soft); background: rgba(6,5,4,.9); }
+    .tt-nav__inner { display: flex; align-items: center; justify-content: space-between; gap: 1.5rem; height: 72px; max-width: 1180px; margin: 0 auto; padding-inline: clamp(1.1rem, 4vw, 3rem); }
+    .tt-logo { display: inline-flex; align-items: center; gap: .6rem; font-family: var(--font-mono); font-weight: 700; letter-spacing: .22em; font-size: .92rem; text-transform: uppercase; white-space: nowrap; }
+    .tt-logo span.t2 { color: var(--gold); }
+    .tt-logo__home { width: 18px; height: 18px; color: var(--gold); flex: none; filter: drop-shadow(0 0 6px rgba(216,185,129,.5)); transition: transform .3s var(--ease); }
+    .tt-logo:hover .tt-logo__home { transform: translateY(-1px) scale(1.08); }
+    .tt-links { display: flex; align-items: center; gap: clamp(1rem, 2.4vw, 2.2rem); }
+    .tt-link { font-family: var(--font-mono); font-size: .72rem; letter-spacing: .16em; text-transform: uppercase; color: var(--ink-dim); position: relative; padding: .4rem 0; transition: color .3s; }
+    .tt-link::after { content: ""; position: absolute; left: 0; bottom: 0; height: 1px; width: 0; background: var(--gold); transition: width .35s var(--ease); }
+    .tt-link:hover { color: var(--ink); } .tt-link:hover::after { width: 100%; }
+    .tt-link[aria-current="page"] { color: var(--gold); } .tt-link[aria-current="page"]::after { width: 100%; }
+    .tt-cta { font-family: var(--font-mono); font-size: .72rem; letter-spacing: .14em; text-transform: uppercase; color: #1a1408; background: var(--gold); padding: .7rem 1.25rem; border-radius: 3px; display: inline-flex; align-items: center; gap: .5rem; font-weight: 700; border: 0; cursor: pointer; transition: transform .3s var(--ease), background .3s, box-shadow .3s; }
+    .tt-cta:hover { background: var(--gold-bright); transform: translateY(-2px); box-shadow: 0 10px 30px rgba(216,185,129,.28); }
+    .tt-cta svg { width: 13px; height: 13px; }
+
+    .pg-hero { position: relative; z-index: 1; padding: clamp(3.5rem, 11vh, 8rem) 0 clamp(2.5rem, 7vh, 5rem); }
+    .tt-eyebrow { font-family: var(--font-mono); font-size: .72rem; letter-spacing: .3em; text-transform: uppercase; color: var(--gold); display: inline-flex; align-items: center; gap: .8rem; margin-bottom: 1.6rem; }
+    .tt-eyebrow::before { content: ""; width: 34px; height: 1px; background: var(--gold); }
+    .pg-hero h1 { font-family: var(--font-display); font-weight: 600; letter-spacing: -.025em; font-size: clamp(2.6rem, 6.4vw, 5rem); line-height: 1; margin-bottom: 1.3rem; max-width: 16ch; }
+    .pg-hero h1 em { font-style: italic; font-weight: 300; color: var(--gold-bright); }
+    .pg-hero p { color: var(--ink-dim); font-size: clamp(1.02rem, 1.5vw, 1.22rem); max-width: 56ch; }
+    .pg-crumb { font-family: var(--font-mono); font-size: .64rem; letter-spacing: .16em; text-transform: uppercase; color: var(--muted); margin-bottom: 1.4rem; }
+    .pg-crumb a { color: var(--ink-dim); } .pg-crumb a:hover { color: var(--gold); }
+
+    .pg-section { position: relative; z-index: 1; padding-block: clamp(2.5rem, 7vh, 5rem); }
+    .pg-title { font-family: var(--font-display); font-weight: 500; letter-spacing: -.02em; font-size: clamp(1.7rem, 4vw, 2.8rem); line-height: 1.05; margin-bottom: 2rem; }
+    .pg-title em { font-style: italic; font-weight: 300; color: var(--gold-bright); }
+
+    /* PRESS RELEASES */
+    .pg-news { display: grid; gap: 0; }
+    .pg-item { display: grid; grid-template-columns: 150px 1fr auto; gap: 1.4rem; align-items: baseline; padding: 1.5rem 0; border-bottom: 1px solid var(--line-soft); transition: border-color .3s; }
+    .pg-item:first-child { border-top: 1px solid var(--line-soft); }
+    .pg-item:hover { border-color: var(--gold); }
+    .pg-item__date { font-family: var(--font-mono); font-size: .68rem; letter-spacing: .12em; text-transform: uppercase; color: var(--muted); }
+    .pg-item__title { font-family: var(--font-display); font-weight: 500; font-size: 1.3rem; line-height: 1.25; }
+    .pg-item__title a { transition: color .3s; } .pg-item__title a:hover { color: var(--gold-bright); }
+    .pg-item__excerpt { color: var(--ink-dim); font-size: .92rem; margin-top: .5rem; max-width: 60ch; }
+    .pg-item__tag { font-family: var(--font-mono); font-size: .58rem; font-weight: 700; letter-spacing: .14em; text-transform: uppercase; color: #120c04; background: var(--gold); padding: .35rem .6rem; border-radius: 999px; white-space: nowrap; align-self: start; }
+
+    /* MEDIA KIT */
+    .pg-kit { display: grid; gap: clamp(1rem, 2.2vw, 1.5rem); grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); }
+    .pg-kit__card { display: flex; flex-direction: column; gap: .7rem; border: 1px solid var(--line); border-radius: var(--tt-radius-sm); padding: 1.6rem 1.5rem; background: linear-gradient(165deg, var(--tt-panel-2), var(--tt-panel)); transition: transform .35s var(--ease), border-color .35s; }
+    .pg-kit__card:hover { transform: translateY(-5px); border-color: var(--gold); }
+    .pg-kit__card .ic { width: 40px; height: 40px; color: var(--gold); } .pg-kit__card .ic svg { width: 100%; height: 100%; }
+    .pg-kit__card h3 { font-family: var(--font-display); font-weight: 500; font-size: 1.18rem; }
+    .pg-kit__card p { color: var(--ink-dim); font-size: .9rem; line-height: 1.5; flex: 1; }
+    .pg-kit__link { font-family: var(--font-mono); font-size: .68rem; letter-spacing: .12em; text-transform: uppercase; color: var(--gold); display: inline-flex; align-items: center; gap: .5rem; }
+    .pg-kit__link svg { width: 14px; height: 14px; transition: transform .3s var(--ease); }
+    .pg-kit__link:hover svg { transform: translateX(4px); }
+
+    /* FACTS */
+    .pg-facts { display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 1.6rem 2rem; }
+    .pg-fact { border-left: 1px solid var(--line); padding-left: 1.2rem; }
+    .pg-fact .n { font-family: var(--font-display); font-weight: 500; font-size: clamp(2rem, 5vw, 3.2rem); line-height: 1; color: var(--gold-bright); }
+    .pg-fact .l { font-family: var(--font-mono); font-size: .62rem; letter-spacing: .14em; text-transform: uppercase; color: var(--muted); margin-top: .7rem; }
+
+    /* CONTACT BAND */
+    .pg-band { border: 1px solid var(--line); border-radius: var(--tt-radius); padding: clamp(2.2rem, 6vw, 4rem); text-align: center; background: radial-gradient(70% 120% at 50% 0%, rgba(216,185,129,.08), transparent 60%), linear-gradient(160deg, #121110, #070605); }
+    .pg-band h2 { font-family: var(--font-display); font-weight: 500; font-size: clamp(1.8rem, 5vw, 3rem); letter-spacing: -.02em; }
+    .pg-band h2 em { font-style: italic; font-weight: 300; color: var(--gold-bright); }
+    .pg-band p { color: var(--ink-dim); margin: 1rem auto 2rem; max-width: 48ch; }
+    .tt-btn { display: inline-flex; align-items: center; justify-content: center; gap: .6rem; font-family: var(--font-mono); font-size: .78rem; letter-spacing: .14em; text-transform: uppercase; font-weight: 700; cursor: pointer; border-radius: 4px; padding: 1rem 1.8rem; background: var(--gold); color: #1a1408; border: 1px solid var(--gold); transition: transform .3s var(--ease), background .3s, box-shadow .3s; }
+    .tt-btn svg { width: 15px; height: 15px; transition: transform .3s var(--ease); }
+    .tt-btn:hover { background: var(--gold-bright); transform: translateY(-2px); box-shadow: 0 12px 32px rgba(216,185,129,.25); } .tt-btn:hover svg { transform: translateX(4px); }
+
+    .tt-footer { border-top: 1px solid var(--line-soft); padding-block: clamp(3rem, 7vh, 5rem) 2.5rem; position: relative; z-index: 1; margin-top: clamp(2rem, 6vh, 4rem); }
+    .tt-footer__top { display: grid; grid-template-columns: 1.6fr 1fr 1fr 1fr; gap: clamp(1.6rem, 4vw, 3rem); }
+    .tt-footer__brand .tt-logo { font-size: 1rem; margin-bottom: 1.1rem; }
+    .tt-footer__brand p { color: var(--ink-dim); font-size: .92rem; max-width: 34ch; margin-bottom: 1.4rem; }
+    .tt-socials { display: flex; gap: .8rem; }
+    .tt-socials a { width: 38px; height: 38px; border: 1px solid var(--line); border-radius: 50%; display: grid; place-items: center; color: var(--ink-dim); transition: color .3s, border-color .3s, transform .3s var(--ease); }
+    .tt-socials a:hover { color: var(--gold); border-color: var(--gold); transform: translateY(-3px); }
+    .tt-socials svg { width: 16px; height: 16px; }
+    .tt-fcol h4 { font-family: var(--font-mono); font-size: .66rem; letter-spacing: .2em; text-transform: uppercase; color: var(--ink); margin-bottom: 1.1rem; }
+    .tt-fcol a, .tt-fcol address span { display: block; color: var(--ink-dim); font-size: .9rem; padding: .35rem 0; font-style: normal; transition: color .3s; }
+    .tt-fcol a:hover { color: var(--gold); }
+    .tt-fcol a[aria-current="page"] { color: var(--gold); }
+    .tt-footer__bottom { margin-top: 2.6rem; padding-top: 1.6rem; border-top: 1px solid var(--line-soft); display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 1rem; font-family: var(--font-mono); font-size: .64rem; letter-spacing: .12em; text-transform: uppercase; color: var(--muted); }
+    .tt-pay { display: flex; gap: .6rem; } .tt-pay span { border: 1px solid var(--line); border-radius: 4px; padding: .3rem .55rem; }
+    .tt-footer__legal { display: flex; flex-wrap: wrap; gap: 1.2rem; }
+    .tt-footer__legal a { color: var(--muted); transition: color .3s; } .tt-footer__legal a:hover { color: var(--gold); }
+
+    @media (max-width: 1000px) { .tt-footer__top { grid-template-columns: 1fr 1fr; gap: 2rem; } .tt-footer__brand { grid-column: 1 / -1; } }
+    @media (max-width: 760px) { .tt-links { display: none; } .pg-item { grid-template-columns: 1fr; gap: .6rem; } .pg-item__tag { justify-self: start; } }
+    @media (max-width: 560px) { .tt-footer__top { grid-template-columns: 1fr; } }
+    @media (prefers-reduced-motion: reduce) { .js .tt-reveal { opacity: 1 !important; transform: none !important; } * { animation: none !important; } }
+  </style>
+</head>
+<body>
+
+  <header class="tt-nav" id="top">
+    <div class="tt-nav__inner">
+      <a class="tt-logo" href="index.html" aria-label="Tester Tech — back to home">
+        <svg class="tt-logo__home" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 11.5 12 4l9 7.5"/><path d="M5 10v9a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-9"/></svg> TESTER<span class="t2">TECH</span>
+      </a>
+      <nav class="tt-links" aria-label="Primary">
+        <a class="tt-link" href="TesterTech.html#featured">Products</a>
+        <a class="tt-link" href="TesterTech.html#about">About</a>
+        <a class="tt-link" href="careers.html">Careers</a>
+        <a class="tt-link" href="press.html" aria-current="page">Press</a>
+        <a class="tt-link" href="sustainability.html">Sustainability</a>
+        <a class="tt-link" href="trend-finder.html">Trend Finder</a>
+      </nav>
+      <a class="tt-cta" href="mailto:press@testertech.com">
+        Press contact
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+      </a>
+    </div>
+  </header>
+
+  <main>
+    <section class="pg-hero">
+      <div class="tt-wrap">
+        <div class="pg-crumb tt-reveal"><a href="TesterTech.html">Tester Tech</a> · Press</div>
+        <span class="tt-eyebrow tt-reveal">Press room</span>
+        <h1 class="tt-reveal">The latest from <em>Tester Tech.</em></h1>
+        <p class="tt-reveal">Announcements, milestones and media resources. For interviews, review units or anything not covered here, our press team replies within one business day.</p>
+      </div>
+    </section>
+
+    <!-- ============================ ANNOUNCEMENTS ============================ -->
+    <section class="pg-section">
+      <div class="tt-wrap">
+        <h2 class="pg-title tt-reveal">Latest <em>announcements.</em></h2>
+        <div class="pg-news">
+          <article class="pg-item tt-reveal">
+            <div class="pg-item__date">May 28, 2026</div>
+            <div>
+              <div class="pg-item__title"><a href="mailto:press@testertech.com?subject=Press%20enquiry%20—%20Spectra%20launch">Tester Tech unveils Spectra, its first smart glasses</a></div>
+              <p class="pg-item__excerpt">A 36-gram titanium frame with a near-invisible projected display, open-ear audio and a fully on-device assistant — no phone required.</p>
+            </div>
+            <span class="pg-item__tag">Product</span>
+          </article>
+          <article class="pg-item tt-reveal" data-delay="1">
+            <div class="pg-item__date">Apr 09, 2026</div>
+            <div>
+              <div class="pg-item__title"><a href="mailto:press@testertech.com?subject=Press%20enquiry%20—%20Chrono%20Pro">Chrono Pro crosses 1 million units, becomes our fastest-selling device</a></div>
+              <p class="pg-item__excerpt">The 14-day-battery flagship reaches a milestone eight months after launch, with a 4.9-star average across 12,000+ verified reviews.</p>
+            </div>
+            <span class="pg-item__tag">Milestone</span>
+          </article>
+          <article class="pg-item tt-reveal" data-delay="2">
+            <div class="pg-item__date">Mar 15, 2026</div>
+            <div>
+              <div class="pg-item__title"><a href="mailto:press@testertech.com?subject=Press%20enquiry%20—%20repairability">Tester Tech publishes full repairability scores for every device</a></div>
+              <p class="pg-item__excerpt">Every product now ships with a public teardown guide and a parts store, part of our commitment to hardware that's inherited, not replaced.</p>
+            </div>
+            <span class="pg-item__tag">Company</span>
+          </article>
+          <article class="pg-item tt-reveal" data-delay="3">
+            <div class="pg-item__date">Feb 02, 2026</div>
+            <div>
+              <div class="pg-item__title"><a href="mailto:press@testertech.com?subject=Press%20enquiry%20—%20recycled%20titanium">100% recycled titanium arrives across the Chrono range</a></div>
+              <p class="pg-item__excerpt">Every Chrono case is now machined from certified recycled Grade-5 titanium, cutting embodied carbon by 38% with no change to durability.</p>
+            </div>
+            <span class="pg-item__tag">Sustainability</span>
+          </article>
+          <article class="pg-item tt-reveal" data-delay="4">
+            <div class="pg-item__date">Jan 12, 2026</div>
+            <div>
+              <div class="pg-item__title"><a href="mailto:press@testertech.com?subject=Press%20enquiry%20—%202026%20collection">The 2026 collection: one ecosystem, every device</a></div>
+              <p class="pg-item__excerpt">Phones, audio, wearables and smart-home gear that hand off to each other automatically — all engineered to the same micron.</p>
+            </div>
+            <span class="pg-item__tag">Product</span>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================ BY THE NUMBERS ============================ -->
+    <section class="pg-section" style="padding-top:0;">
+      <div class="tt-wrap">
+        <h2 class="pg-title tt-reveal">By the <em>numbers.</em></h2>
+        <div class="pg-facts tt-reveal">
+          <div class="pg-fact"><div class="n">2026</div><div class="l">Founded · A Tester Laboratories brand</div></div>
+          <div class="pg-fact"><div class="n">120+</div><div class="l">Products across the range</div></div>
+          <div class="pg-fact"><div class="n">50k+</div><div class="l">Devices shipped</div></div>
+          <div class="pg-fact"><div class="n">30</div><div class="l">Countries served</div></div>
+          <div class="pg-fact"><div class="n">4.9★</div><div class="l">Average customer rating</div></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================ MEDIA KIT ============================ -->
+    <section class="pg-section" style="padding-top:0;">
+      <div class="tt-wrap">
+        <h2 class="pg-title tt-reveal">Media <em>resources.</em></h2>
+        <div class="pg-kit">
+          <div class="pg-kit__card tt-reveal">
+            <span class="ic" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="3" y="3" width="18" height="18" rx="3"/><circle cx="8.5" cy="8.5" r="1.8"/><path d="M21 15l-5-5L5 21"/></svg></span>
+            <h3>Brand & logos</h3>
+            <p>Logo marks, clear-space rules and our gold-on-black colour system in SVG and PNG.</p>
+            <a class="pg-kit__link" href="mailto:press@testertech.com?subject=Media%20kit%20request%20—%20Brand%20%26%20logos">Request assets <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+          </div>
+          <div class="pg-kit__card tt-reveal" data-delay="1">
+            <span class="ic" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 9h18M8 5V3M16 5V3"/></svg></span>
+            <h3>Product imagery</h3>
+            <p>High-resolution studio and lifestyle photography for every device in the range.</p>
+            <a class="pg-kit__link" href="mailto:press@testertech.com?subject=Media%20kit%20request%20—%20Product%20imagery">Request images <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+          </div>
+          <div class="pg-kit__card tt-reveal" data-delay="2">
+            <span class="ic" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M4 4h16v16H4z"/><path d="M8 8h8M8 12h8M8 16h5"/></svg></span>
+            <h3>Fact sheets</h3>
+            <p>Spec sheets, leadership bios and the official company backgrounder.</p>
+            <a class="pg-kit__link" href="mailto:press@testertech.com?subject=Media%20kit%20request%20—%20Fact%20sheets">Request fact sheets <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================ CONTACT BAND ============================ -->
+    <section class="pg-section" style="padding-top:0;">
+      <div class="tt-wrap">
+        <div class="pg-band tt-reveal">
+          <h2>Working on a <em>story?</em></h2>
+          <p>Reach our press team directly for interviews, review units, quotes or anything you can't find here.</p>
+          <a class="tt-btn" href="mailto:press@testertech.com?subject=Press%20enquiry">
+            press@testertech.com
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+          </a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="tt-footer">
+    <div class="tt-wrap">
+      <div class="tt-footer__top">
+        <div class="tt-footer__brand">
+          <a class="tt-logo" href="index.html" aria-label="Tester Tech — back to home"><svg class="tt-logo__home" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 11.5 12 4l9 7.5"/><path d="M5 10v9a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-9"/></svg> TESTER<span class="t2">TECH</span></a>
+          <p>Premium consumer technology, engineered to the micron and built to be inherited, not replaced.</p>
+          <div class="tt-socials">
+            <a href="https://x.com/testertech" target="_blank" rel="noopener noreferrer" aria-label="Tester Tech on X / Twitter"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M18.9 2H22l-7 8 8.2 12h-6.4l-5-7.3L6 22H2.9l7.5-8.6L2.5 2h6.6l4.5 6.6L18.9 2zm-1.1 18h1.7L7.3 3.8H5.5L17.8 20z"/></svg></a>
+            <a href="https://instagram.com/testertech" target="_blank" rel="noopener noreferrer" aria-label="Tester Tech on Instagram"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/></svg></a>
+            <a href="https://youtube.com/@testertech" target="_blank" rel="noopener noreferrer" aria-label="Tester Tech on YouTube"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><rect x="2.5" y="6" width="19" height="12" rx="4"/><path d="M10 9.2l5 2.8-5 2.8z" fill="currentColor" stroke="none"/></svg></a>
+            <a href="https://github.com/testertech" target="_blank" rel="noopener noreferrer" aria-label="Tester Tech on GitHub"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2a10 10 0 00-3.16 19.49c.5.09.68-.22.68-.48v-1.7c-2.78.6-3.37-1.34-3.37-1.34-.45-1.16-1.11-1.47-1.11-1.47-.91-.62.07-.61.07-.61 1 .07 1.53 1.03 1.53 1.03.9 1.53 2.36 1.09 2.94.83.09-.65.35-1.09.63-1.34-2.22-.25-4.55-1.11-4.55-4.94 0-1.09.39-1.98 1.03-2.68-.1-.25-.45-1.27.1-2.65 0 0 .84-.27 2.75 1.02a9.5 9.5 0 015 0c1.91-1.29 2.75-1.02 2.75-1.02.55 1.38.2 2.4.1 2.65.64.7 1.03 1.59 1.03 2.68 0 3.84-2.34 4.69-4.57 4.94.36.31.68.92.68 1.85v2.74c0 .27.18.58.69.48A10 10 0 0012 2z"/></svg></a>
+          </div>
+        </div>
+        <div class="tt-fcol">
+          <h4>Shop</h4>
+          <a href="TesterTech.html#featured">Featured</a>
+          <a href="TesterTech.html#best">Best Sellers</a>
+          <a href="TesterTech.html#new">New Arrivals</a>
+          <a href="TesterTech.html#deals">Deals</a>
+        </div>
+        <div class="tt-fcol">
+          <h4>Company</h4>
+          <a href="TesterTech.html#about">About</a>
+          <a href="careers.html">Careers</a>
+          <a href="press.html" aria-current="page">Press</a>
+          <a href="sustainability.html">Sustainability</a>
+          <a href="index.html">Smart Watch Pro</a>
+        </div>
+        <div class="tt-fcol">
+          <h4>Get in touch</h4>
+          <address>
+            <span>hello@testertech.com</span>
+            <span>+1 (800) 555-0142</span>
+            <span>140 Micron Way, San Francisco, CA</span>
+            <span>Mon–Fri · 9am–6pm PT</span>
+          </address>
+        </div>
+      </div>
+      <div class="tt-footer__bottom">
+        <span>© 2026 Tester Tech — A Tester Laboratories brand</span>
+        <div class="tt-footer__legal">
+          <a href="privacy.html">Privacy</a><a href="terms.html">Terms</a><a href="returns.html">Returns</a>
+        </div>
+        <div class="tt-pay"><span>Visa</span><span>Mastercard</span><span>Amex</span><span>Apple Pay</span></div>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    (function () {
+      "use strict";
+      document.documentElement.classList.add("js");
+      var nav = document.querySelector(".tt-nav");
+      var onScroll = function () { if (nav) nav.classList.toggle("scrolled", window.scrollY > 12); };
+      window.addEventListener("scroll", onScroll, { passive: true });
+      onScroll();
+      var reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+      var items = Array.prototype.slice.call(document.querySelectorAll(".tt-reveal"));
+      if (reduce || !("IntersectionObserver" in window)) {
+        items.forEach(function (el) { el.classList.add("in"); });
+      } else {
+        var io = new IntersectionObserver(function (entries) {
+          entries.forEach(function (e) {
+            if (e.isIntersecting) {
+              var d = parseInt(e.target.getAttribute("data-delay") || "0", 10);
+              setTimeout(function () { e.target.classList.add("in"); }, d * 80);
+              io.unobserve(e.target);
+            }
+          });
+        }, { threshold: 0.12, rootMargin: "0px 0px -6% 0px" });
+        items.forEach(function (el) { io.observe(el); });
+      }
+    })();
+  </script>
+  <script src="js/catalog.js"></script>
+  <script src="js/cart.js"></script>
+  <script src="js/search.js"></script>
+</body>
+</html>

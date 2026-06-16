@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Thank You · Tester Smart Watch Pro</title>
+  <meta name="description" content="Thank you for reaching out to Tester Laboratories." />
+
+  <!-- Same fonts as the rest of the site -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,500;0,9..144,600;1,9..144,300;1,9..144,500&family=Familjen+Grotesk:wght@400;500;600&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet" />
+
+  <link rel="stylesheet" href="css/style.css" />
+
+  <!-- Fallback redirect in case JS is disabled: jumps after 5 seconds -->
+  <noscript><meta http-equiv="refresh" content="5; url=product.html" /></noscript>
+
+  <style>
+    .ty-wrap {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 2rem;
+      background: var(--bg);
+    }
+    .ty-label {
+      font-family: var(--font-mono);
+      font-size: 0.78rem;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 1.4rem;
+    }
+    .ty-heading {
+      font-family: var(--font-display);
+      font-weight: 300;
+      font-size: clamp(2.4rem, 7vw, 5rem);
+      line-height: 1.04;
+      color: var(--ink);
+      margin-bottom: 1.2rem;
+    }
+    .ty-heading em { color: var(--gold); font-style: italic; }
+    .ty-text {
+      font-family: var(--font-body);
+      color: var(--ink-dim);
+      max-width: 34rem;
+      font-size: 1.05rem;
+      line-height: 1.7;
+      margin-bottom: 2.6rem;
+    }
+    .ty-count {
+      font-family: var(--font-mono);
+      font-size: 0.8rem;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: 2rem;
+    }
+    .ty-count strong { color: var(--gold); }
+  </style>
+</head>
+<body>
+  <div class="ty-wrap">
+    <p class="ty-label">Tester Laboratories</p>
+    <h1 class="ty-heading">Thank <em>you</em>.</h1>
+    <p class="ty-text">
+      Your details are safely recorded. We'll be in touch shortly. In the
+      meantime, let us show you what you're about to wear.
+    </p>
+    <p class="ty-count">
+      Taking you to the product in <strong id="count">5</strong>…
+    </p>
+    <a class="btn-buy" href="product.html">
+      <span>Go now</span>
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+    </a>
+  </div>
+
+  <script>
+    // Visible countdown, then redirect to the product page after 5 seconds.
+    (function () {
+      var seconds = 5;
+      var el = document.getElementById("count");
+      var timer = setInterval(function () {
+        seconds -= 1;
+        if (el) el.textContent = seconds;
+        if (seconds <= 0) {
+          clearInterval(timer);
+          window.location.href = "product.html";
+        }
+      }, 1000);
+    })();
+  </script>
+</body>
+</html>

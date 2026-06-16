@@ -1,0 +1,751 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Trend Finder — Tester Tech</title>
+  <meta name="description" content="Search any topic and discover the top 5 trending items from across the web — with the source and a direct link to each." />
+  <meta name="theme-color" content="#080705" />
+
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%23080705'/%3E%3Ccircle cx='16' cy='16' r='6' fill='%23d8b981'/%3E%3C/svg%3E" />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,500;0,9..144,600;1,9..144,300;1,9..144,500&family=Familjen+Grotesk:wght@400;500;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet" />
+
+  <link rel="stylesheet" href="css/style.css" />
+  <link rel="stylesheet" href="css/cart.css" />
+
+  <style>
+    /* ===== shared sub-page shell (built on css/style.css tokens) ===== */
+    :root { --tt-panel:#0c0c0c; --tt-panel-2:#121110; --tt-radius:16px; --tt-radius-sm:11px; --shadow:0 24px 60px -28px rgba(0,0,0,.9); --ship:#5fd0a8; }
+    body { overflow-x: hidden; }
+    .tt-wrap { max-width: 1180px; margin: 0 auto; padding-inline: clamp(1.1rem, 4vw, 3rem); }
+    .tt-reveal { opacity: 1; }
+    .js .tt-reveal { opacity: 0; transform: translateY(28px); transition: opacity .8s var(--ease), transform .8s var(--ease); }
+    .js .tt-reveal.in { opacity: 1; transform: none; }
+    a:focus-visible, button:focus-visible { outline: 2px solid var(--gold-bright); outline-offset: 3px; border-radius: 4px; }
+
+    /* NAV */
+    .tt-nav { position: sticky; top: 0; z-index: 100; background: rgba(6,5,4,.72); backdrop-filter: blur(16px) saturate(120%); -webkit-backdrop-filter: blur(16px) saturate(120%); border-bottom: 1px solid transparent; transition: border-color .4s var(--ease), background .4s var(--ease); }
+    .tt-nav.scrolled { border-color: var(--line-soft); background: rgba(6,5,4,.9); }
+    .tt-nav__inner { display: flex; align-items: center; justify-content: space-between; gap: 1.5rem; height: 72px; max-width: 1180px; margin: 0 auto; padding-inline: clamp(1.1rem, 4vw, 3rem); }
+    .tt-logo { display: inline-flex; align-items: center; gap: .6rem; font-family: var(--font-mono); font-weight: 700; letter-spacing: .22em; font-size: .92rem; text-transform: uppercase; white-space: nowrap; }
+    .tt-logo span.t2 { color: var(--gold); }
+    .tt-logo__home { width: 18px; height: 18px; color: var(--gold); flex: none; filter: drop-shadow(0 0 6px rgba(216,185,129,.5)); transition: transform .3s var(--ease); }
+    .tt-logo:hover .tt-logo__home { transform: translateY(-1px) scale(1.08); }
+    .tt-links { display: flex; align-items: center; gap: clamp(1rem, 2.4vw, 2.2rem); }
+    .tt-link { font-family: var(--font-mono); font-size: .72rem; letter-spacing: .16em; text-transform: uppercase; color: var(--ink-dim); position: relative; padding: .4rem 0; transition: color .3s; }
+    .tt-link::after { content: ""; position: absolute; left: 0; bottom: 0; height: 1px; width: 0; background: var(--gold); transition: width .35s var(--ease); }
+    .tt-link:hover { color: var(--ink); } .tt-link:hover::after { width: 100%; }
+    .tt-link[aria-current="page"] { color: var(--gold); } .tt-link[aria-current="page"]::after { width: 100%; }
+    .tt-cta { font-family: var(--font-mono); font-size: .72rem; letter-spacing: .14em; text-transform: uppercase; color: #1a1408; background: var(--gold); padding: .7rem 1.25rem; border-radius: 3px; display: inline-flex; align-items: center; gap: .5rem; font-weight: 700; border: 0; cursor: pointer; transition: transform .3s var(--ease), background .3s, box-shadow .3s; }
+    .tt-cta:hover { background: var(--gold-bright); transform: translateY(-2px); box-shadow: 0 10px 30px rgba(216,185,129,.28); }
+    .tt-cta svg { width: 13px; height: 13px; }
+
+    /* PAGE HERO */
+    .pg-hero { position: relative; z-index: 1; padding: clamp(3.5rem, 11vh, 8rem) 0 clamp(2rem, 5vh, 3.5rem); }
+    .tt-eyebrow { font-family: var(--font-mono); font-size: .72rem; letter-spacing: .3em; text-transform: uppercase; color: var(--gold); display: inline-flex; align-items: center; gap: .8rem; margin-bottom: 1.6rem; }
+    .tt-eyebrow::before { content: ""; width: 34px; height: 1px; background: var(--gold); }
+    .pg-hero h1 { font-family: var(--font-display); font-weight: 600; letter-spacing: -.025em; font-size: clamp(2.6rem, 6.4vw, 5rem); line-height: 1; margin-bottom: 1.3rem; max-width: 16ch; }
+    .pg-hero h1 em { font-style: italic; font-weight: 300; color: var(--gold-bright); }
+    .pg-hero p { color: var(--ink-dim); font-size: clamp(1.02rem, 1.5vw, 1.22rem); max-width: 56ch; }
+    .pg-crumb { font-family: var(--font-mono); font-size: .64rem; letter-spacing: .16em; text-transform: uppercase; color: var(--muted); margin-bottom: 1.4rem; }
+    .pg-crumb a { color: var(--ink-dim); } .pg-crumb a:hover { color: var(--gold); }
+
+    /* SECTION + GENERIC */
+    .pg-section { position: relative; z-index: 1; padding-block: clamp(2rem, 5vh, 3.5rem); }
+    .pg-title { font-family: var(--font-display); font-weight: 500; letter-spacing: -.02em; font-size: clamp(1.7rem, 4vw, 2.8rem); line-height: 1.05; margin-bottom: 2rem; }
+    .pg-title em { font-style: italic; font-weight: 300; color: var(--gold-bright); }
+
+    /* TREND FINDER — SEARCH */
+    .tf-search { display: flex; gap: .8rem; flex-wrap: wrap; max-width: 640px; }
+    .tf-input { flex: 1 1 280px; min-width: 0; font-family: var(--font-body); font-size: 1rem; color: var(--ink); background: linear-gradient(165deg, var(--tt-panel-2), var(--tt-panel)); border: 1px solid var(--line); border-radius: var(--tt-radius-sm); padding: 1rem 1.15rem; transition: border-color .3s, box-shadow .3s; }
+    .tf-input::placeholder { color: var(--muted); }
+    .tf-input:focus { outline: none; border-color: var(--gold); box-shadow: 0 0 0 3px rgba(216,185,129,.14); }
+    .tf-submit { white-space: nowrap; }
+    .tf-submit svg { width: 15px; height: 15px; transition: transform .3s var(--ease); }
+    .tf-submit:hover svg { transform: translateX(4px); }
+    .tf-submit[disabled] { opacity: .6; cursor: progress; }
+    .tf-hint { color: var(--muted); font-family: var(--font-mono); font-size: .68rem; letter-spacing: .12em; text-transform: uppercase; margin-top: 1rem; }
+
+    /* TREND FINDER — RESULTS */
+    .tf-status { color: var(--ink-dim); font-size: 1rem; padding: 1.4rem 0; min-height: 1.2em; }
+    .tf-status .tf-err { color: #e08a7a; }
+    .tf-spin { display: inline-block; width: 15px; height: 15px; margin-right: .6rem; border: 2px solid var(--line); border-top-color: var(--gold); border-radius: 50%; vertical-align: -2px; animation: tf-rot .7s linear infinite; }
+    @keyframes tf-rot { to { transform: rotate(360deg); } }
+
+    /* TWO-COLUMN LAYOUT: results (left) + idea board (right) */
+    .tf-layout { display: grid; grid-template-columns: minmax(0, 1fr) 360px; gap: clamp(1.4rem, 3vw, 2.4rem); align-items: start; }
+    .tf-main { min-width: 0; }
+
+    /* IDEA BOARD (right panel) */
+    .tf-panel { position: sticky; top: 88px; display: flex; flex-direction: column; border: 1px solid var(--line); border-radius: var(--tt-radius); background: linear-gradient(165deg, var(--tt-panel-2), var(--tt-panel)); padding: 1.3rem; max-height: calc(100vh - 108px); }
+    .tf-panel__head { display: flex; align-items: center; gap: .6rem; margin-bottom: 1rem; }
+    .tf-panel__title { font-family: var(--font-display); font-weight: 500; font-size: 1.2rem; }
+    .tf-panel__count { margin-left: auto; font-family: var(--font-mono); font-size: .62rem; letter-spacing: .1em; font-weight: 700; color: #1a1408; background: var(--gold); border-radius: 999px; padding: .18rem .55rem; }
+    .tf-board { list-style: none; display: flex; flex-direction: column; gap: .55rem; overflow-y: auto; flex: 1; margin: 0 -.35rem; padding: 0 .35rem .2rem; }
+    .tf-board__empty { color: var(--muted); font-size: .88rem; line-height: 1.55; padding: 1.2rem 0; }
+    .tf-board__item { display: flex; gap: .4rem; align-items: flex-start; padding: .65rem .75rem; border: 1px solid var(--line-soft); border-radius: var(--tt-radius-sm); background: rgba(255,255,255,.015); transition: border-color .25s; }
+    .tf-board__item:hover { border-color: var(--gold); }
+    .tf-board__label { display: flex; gap: .55rem; align-items: flex-start; flex: 1; min-width: 0; cursor: pointer; }
+    .tf-board__box { margin-top: .15rem; width: 16px; height: 16px; flex: none; accent-color: var(--gold); cursor: pointer; }
+    .tf-board__txt { flex: 1; min-width: 0; }
+    .tf-board__idea { color: var(--ink); font-size: .9rem; line-height: 1.4; }
+    .tf-board__item.is-off .tf-board__idea { color: var(--muted); text-decoration: line-through; }
+    .tf-board__src { display: block; margin-top: .28rem; font-family: var(--font-mono); font-size: .56rem; letter-spacing: .08em; text-transform: uppercase; color: var(--muted); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+    .tf-board__rm { flex: none; width: 22px; height: 22px; border-radius: 50%; border: 1px solid var(--line); background: transparent; color: var(--muted); cursor: pointer; font-size: 1.05rem; line-height: 1; transition: border-color .25s, color .25s; }
+    .tf-board__rm:hover { border-color: #e08a7a; color: #e08a7a; }
+    .tf-panel__foot { margin-top: 1rem; padding-top: .9rem; border-top: 1px solid var(--line-soft); display: flex; flex-direction: column; gap: .7rem; }
+    .tf-panel__row { display: flex; align-items: center; justify-content: space-between; gap: .5rem; }
+    .tf-panel__act { flex: 1; font-family: var(--font-mono); font-size: .66rem; letter-spacing: .1em; text-transform: uppercase; font-weight: 700; border-radius: 4px; padding: .62rem .8rem; cursor: pointer; background: transparent; border: 1px solid var(--line); color: var(--ink-dim); transition: background .3s, border-color .3s, color .3s; }
+    .tf-panel__act:hover { border-color: var(--gold); color: var(--gold); }
+    .tf-panel__act--gold { border-color: var(--gold); color: var(--gold); }
+    .tf-panel__act--gold:hover { background: var(--gold); color: #1a1408; }
+    .tf-panel__act[disabled] { opacity: .45; cursor: default; background: transparent; border-color: var(--line); color: var(--ink-dim); }
+    .tf-panel__clear { font-family: var(--font-mono); font-size: .62rem; letter-spacing: .1em; text-transform: uppercase; color: var(--muted); background: none; border: 0; cursor: pointer; transition: color .3s; }
+    .tf-panel__clear:hover { color: #e08a7a; }
+    .tf-panel__keep { padding: .6rem 1.05rem; font-size: .66rem; letter-spacing: .1em; }
+    .tf-panel__keep[disabled] { opacity: .5; cursor: default; box-shadow: none; transform: none; }
+
+    /* PREVIEW MODAL (export table) */
+    .tf-pv { position: fixed; inset: 0; z-index: 200; display: none; align-items: flex-start; justify-content: center; padding: clamp(1rem, 6vh, 5rem) 1.1rem; background: rgba(4,3,2,.74); backdrop-filter: blur(6px); -webkit-backdrop-filter: blur(6px); overflow-y: auto; }
+    .tf-pv.open { display: flex; }
+    .tf-pv__panel { position: relative; width: 100%; max-width: 760px; background: linear-gradient(165deg, var(--tt-panel-2), var(--tt-panel)); border: 1px solid var(--line); border-radius: var(--tt-radius); padding: clamp(1.6rem, 4vw, 2.4rem); box-shadow: var(--shadow); }
+    .tf-pv__close { position: absolute; top: .9rem; right: 1.1rem; width: 34px; height: 34px; border-radius: 50%; border: 1px solid var(--line); background: transparent; color: var(--ink-dim); font-size: 1.3rem; line-height: 1; cursor: pointer; transition: border-color .3s, color .3s; }
+    .tf-pv__close:hover { border-color: var(--gold); color: var(--gold); }
+    .tf-pv__title { font-family: var(--font-display); font-weight: 500; letter-spacing: -.02em; font-size: clamp(1.3rem, 3vw, 1.9rem); line-height: 1.15; margin: .3rem 0 .5rem; padding-right: 2rem; }
+    .tf-pv__lead { color: var(--ink-dim); font-size: .9rem; margin-bottom: 1.2rem; }
+    .tf-pv__scroll { overflow: auto; max-height: 52vh; border: 1px solid var(--line-soft); border-radius: var(--tt-radius-sm); }
+    .tf-pv__table { width: 100%; border-collapse: collapse; font-size: .88rem; }
+    .tf-pv__table th, .tf-pv__table td { text-align: left; padding: .7rem .85rem; border-bottom: 1px solid var(--line-soft); vertical-align: top; }
+    .tf-pv__table th { position: sticky; top: 0; background: var(--tt-panel-2); font-family: var(--font-mono); font-size: .62rem; letter-spacing: .12em; text-transform: uppercase; color: var(--gold); z-index: 1; }
+    .tf-pv__table tbody tr:last-child td { border-bottom: 0; }
+    .tf-pv__table td a { color: var(--ink-dim); word-break: break-all; transition: color .3s; }
+    .tf-pv__table td a:hover { color: var(--gold); }
+    .tf-pv__num { color: var(--muted); font-family: var(--font-mono); width: 1%; white-space: nowrap; }
+    .tf-pv__foot { margin-top: 1.3rem; padding-top: 1.1rem; border-top: 1px solid var(--line-soft); display: flex; align-items: center; justify-content: space-between; gap: .8rem; flex-wrap: wrap; }
+    .tf-pv__dl { padding: .8rem 1.5rem; }
+
+    /* GOOGLE NEWS — manual-resolve warning (shown on a card when a redirect can't be followed) */
+    .tf-gnews { margin-top: .9rem; padding: .85rem .9rem; border: 1px solid rgba(232,196,90,.42); border-radius: var(--tt-radius-sm); background: rgba(232,196,90,.07); }
+    .tf-gnews__head { display: flex; align-items: center; gap: .5rem; font-family: var(--font-mono); font-size: .62rem; letter-spacing: .1em; text-transform: uppercase; font-weight: 700; color: #e8c45a; margin-bottom: .5rem; }
+    .tf-gnews__ico { width: 15px; height: 15px; flex: none; }
+    .tf-gnews__txt { color: var(--ink-dim); font-size: .8rem; line-height: 1.5; margin-bottom: .7rem; }
+    .tf-gnews__open { display: inline-flex; align-items: center; gap: .4rem; font-family: var(--font-mono); font-size: .66rem; letter-spacing: .08em; text-transform: uppercase; font-weight: 700; color: #e8c45a; margin-bottom: .75rem; transition: color .3s; }
+    .tf-gnews__open svg { width: 12px; height: 12px; }
+    .tf-gnews__open:hover { color: #f3d680; }
+    .tf-gnews__row { display: flex; gap: .45rem; }
+    .tf-gnews__input { flex: 1; min-width: 0; font-family: var(--font-body); font-size: .82rem; color: var(--ink); background: rgba(0,0,0,.25); border: 1px solid var(--line); border-radius: 6px; padding: .55rem .65rem; transition: border-color .25s, box-shadow .25s; }
+    .tf-gnews__input::placeholder { color: var(--muted); }
+    .tf-gnews__input:focus { outline: none; border-color: #e8c45a; box-shadow: 0 0 0 3px rgba(232,196,90,.14); }
+    .tf-gnews__go { flex: none; font-family: var(--font-mono); font-size: .64rem; letter-spacing: .08em; text-transform: uppercase; font-weight: 700; color: #1a1408; background: #e8c45a; border: 0; border-radius: 6px; padding: 0 .9rem; cursor: pointer; transition: background .3s; }
+    .tf-gnews__go:hover { background: #f3d680; }
+    .tf-gnews__go[disabled] { opacity: .6; cursor: progress; }
+    .tf-gnews__status { font-size: .76rem; line-height: 1.45; color: var(--ink-dim); margin-top: .55rem; }
+    .tf-gnews__status:empty { margin-top: 0; }
+    .tf-gnews__status .tf-spin { vertical-align: -2px; }
+    .tf-gnews__err { color: #e08a7a; }
+
+    .tf-results { display: grid; gap: clamp(1rem, 2.2vw, 1.5rem); grid-template-columns: repeat(auto-fill, minmax(230px, 1fr)); }
+    .tf-card { display: flex; flex-direction: column; border: 1px solid var(--line); border-radius: var(--tt-radius-sm); overflow: hidden; background: linear-gradient(165deg, var(--tt-panel-2), var(--tt-panel)); transition: transform .35s var(--ease), border-color .35s, box-shadow .35s; }
+    .tf-card:hover { transform: translateY(-5px); border-color: var(--gold); box-shadow: 0 18px 40px -26px rgba(216,185,129,.3); }
+    .tf-card__media { aspect-ratio: 16 / 10; background: #0a0908; overflow: hidden; border-bottom: 1px solid var(--line-soft); }
+    .tf-card__media img { width: 100%; height: 100%; object-fit: cover; display: block; }
+    .tf-card__media--logo { display: grid; place-items: center; background: radial-gradient(circle at 50% 40%, #15140f, #0a0908); }
+    .tf-card__media--logo img { width: auto; height: auto; max-width: 56px; max-height: 56px; object-fit: contain; }
+    .tf-card__media--none { display: grid; place-items: center; color: var(--muted); }
+    .tf-card__media--none svg { width: 38px; height: 38px; opacity: .5; }
+    .tf-card__body { display: flex; flex-direction: column; gap: .55rem; padding: 1.25rem 1.3rem 1.4rem; flex: 1; }
+    .tf-rank { font-family: var(--font-mono); font-size: .62rem; letter-spacing: .16em; text-transform: uppercase; color: var(--gold); }
+    .tf-card__name { font-family: var(--font-display); font-weight: 500; font-size: 1.12rem; line-height: 1.25; }
+    .tf-card__src { font-family: var(--font-mono); font-size: .64rem; letter-spacing: .1em; text-transform: uppercase; color: var(--muted); word-break: break-word; }
+    .tf-card__name a { color: inherit; transition: color .3s; }
+    .tf-card__name a:hover { color: var(--gold); }
+    .tf-card__actions { margin-top: auto; display: flex; flex-wrap: wrap; gap: .5rem; }
+    .tf-card__act { font-family: var(--font-mono); font-size: .64rem; letter-spacing: .1em; text-transform: uppercase; font-weight: 700; border-radius: 4px; padding: .55rem .85rem; cursor: pointer; background: transparent; border: 1px solid var(--line); color: var(--ink-dim); transition: background .3s, border-color .3s, color .3s; }
+    .tf-card__act:hover { border-color: var(--gold); color: var(--gold); }
+    .tf-card__act--gold { border-color: var(--gold); color: var(--gold); }
+    .tf-card__act--gold:hover { background: var(--gold); color: #1a1408; }
+    .tf-card__act[disabled] { opacity: .6; cursor: progress; }
+
+    /* TOAST */
+    .tf-toast { position: fixed; left: 50%; bottom: 26px; transform: translateX(-50%) translateY(18px); background: var(--gold); color: #1a1408; font-family: var(--font-mono); font-size: .7rem; letter-spacing: .08em; text-transform: uppercase; font-weight: 700; padding: .7rem 1.15rem; border-radius: 6px; box-shadow: var(--shadow); opacity: 0; pointer-events: none; transition: opacity .3s, transform .3s; z-index: 300; }
+    .tf-toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
+
+    /* GENERIC BUTTON (matches site) */
+    .tt-btn { display: inline-flex; align-items: center; justify-content: center; gap: .6rem; font-family: var(--font-mono); font-size: .78rem; letter-spacing: .14em; text-transform: uppercase; font-weight: 700; cursor: pointer; border-radius: 4px; padding: 1rem 1.8rem; background: var(--gold); color: #1a1408; border: 1px solid var(--gold); transition: transform .3s var(--ease), background .3s, box-shadow .3s; }
+    .tt-btn:hover { background: var(--gold-bright); transform: translateY(-2px); box-shadow: 0 12px 32px rgba(216,185,129,.25); }
+
+    /* FOOTER (shared) */
+    .tt-footer { border-top: 1px solid var(--line-soft); padding-block: clamp(3rem, 7vh, 5rem) 2.5rem; position: relative; z-index: 1; margin-top: clamp(2rem, 6vh, 4rem); }
+    .tt-footer__top { display: grid; grid-template-columns: 1.6fr 1fr 1fr 1fr; gap: clamp(1.6rem, 4vw, 3rem); }
+    .tt-footer__brand .tt-logo { font-size: 1rem; margin-bottom: 1.1rem; }
+    .tt-footer__brand p { color: var(--ink-dim); font-size: .92rem; max-width: 34ch; margin-bottom: 1.4rem; }
+    .tt-socials { display: flex; gap: .8rem; }
+    .tt-socials a { width: 38px; height: 38px; border: 1px solid var(--line); border-radius: 50%; display: grid; place-items: center; color: var(--ink-dim); transition: color .3s, border-color .3s, transform .3s var(--ease); }
+    .tt-socials a:hover { color: var(--gold); border-color: var(--gold); transform: translateY(-3px); }
+    .tt-socials svg { width: 16px; height: 16px; }
+    .tt-fcol h4 { font-family: var(--font-mono); font-size: .66rem; letter-spacing: .2em; text-transform: uppercase; color: var(--ink); margin-bottom: 1.1rem; }
+    .tt-fcol a, .tt-fcol address span { display: block; color: var(--ink-dim); font-size: .9rem; padding: .35rem 0; font-style: normal; transition: color .3s; }
+    .tt-fcol a:hover { color: var(--gold); }
+    .tt-fcol a[aria-current="page"] { color: var(--gold); }
+    .tt-footer__bottom { margin-top: 2.6rem; padding-top: 1.6rem; border-top: 1px solid var(--line-soft); display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 1rem; font-family: var(--font-mono); font-size: .64rem; letter-spacing: .12em; text-transform: uppercase; color: var(--muted); }
+    .tt-pay { display: flex; gap: .6rem; } .tt-pay span { border: 1px solid var(--line); border-radius: 4px; padding: .3rem .55rem; }
+    .tt-footer__legal { display: flex; flex-wrap: wrap; gap: 1.2rem; }
+    .tt-footer__legal a { color: var(--muted); transition: color .3s; } .tt-footer__legal a:hover { color: var(--gold); }
+
+    @media (max-width: 1000px) { .tt-footer__top { grid-template-columns: 1fr 1fr; gap: 2rem; } .tt-footer__brand { grid-column: 1 / -1; } }
+    @media (max-width: 920px) { .tf-layout { grid-template-columns: 1fr; } .tf-panel { position: static; max-height: none; } .tf-board { max-height: 420px; } }
+    @media (max-width: 760px) { .tt-links { display: none; } }
+    @media (max-width: 560px) { .tt-footer__top { grid-template-columns: 1fr; } .tf-search { flex-direction: column; } .tf-submit { width: 100%; } }
+    @media (prefers-reduced-motion: reduce) { .js .tt-reveal { opacity: 1 !important; transform: none !important; } * { animation: none !important; } }
+  </style>
+</head>
+<body>
+
+  <!-- ============================ NAV ============================ -->
+  <header class="tt-nav" id="top">
+    <div class="tt-nav__inner">
+      <a class="tt-logo" href="index.html" aria-label="Tester Tech — back to home">
+        <svg class="tt-logo__home" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 11.5 12 4l9 7.5"/><path d="M5 10v9a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-9"/></svg> TESTER<span class="t2">TECH</span>
+      </a>
+      <nav class="tt-links" aria-label="Primary">
+        <a class="tt-link" href="TesterTech.html#featured">Products</a>
+        <a class="tt-link" href="TesterTech.html#about">About</a>
+        <a class="tt-link" href="careers.html">Careers</a>
+        <a class="tt-link" href="press.html">Press</a>
+        <a class="tt-link" href="sustainability.html">Sustainability</a>
+        <a class="tt-link" href="trend-finder.html" aria-current="page">Trend Finder</a>
+      </nav>
+      <a class="tt-cta" href="#finder">
+        Find trends
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+      </a>
+    </div>
+  </header>
+
+  <main>
+    <!-- ============================ HERO ============================ -->
+    <section class="pg-hero">
+      <div class="tt-wrap">
+        <div class="pg-crumb tt-reveal"><a href="TesterTech.html">Tester Tech</a> · Trend Finder</div>
+        <span class="tt-eyebrow tt-reveal">Trend Finder</span>
+        <h1 class="tt-reveal">Find what's <em>trending.</em></h1>
+        <p class="tt-reveal">Search any topic for the top trending articles across Google News, Reddit and Hacker News. Then let AI read each one and pull out its ranked ideas — they drop straight into the <em>idea panel</em> on the right, where you tick the ones worth keeping.</p>
+      </div>
+    </section>
+
+    <!-- ============================ FINDER ============================ -->
+    <section class="pg-section" id="finder" style="padding-top:0;">
+      <div class="tt-wrap">
+        <form class="tf-search tt-reveal" id="tf-form" role="search" autocomplete="off">
+          <input class="tf-input" id="tf-input" type="text" name="q" placeholder="Search any topic…" aria-label="Search any topic" required />
+          <button class="tt-btn tf-submit" id="tf-submit" type="submit">
+            Find trends
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+          </button>
+        </form>
+        <p class="tf-hint tt-reveal">Live results · Google News · Reddit · Hacker News · top 5</p>
+      </div>
+    </section>
+
+    <!-- ============================ RESULTS + IDEA BOARD ============================ -->
+    <section class="pg-section" style="padding-top:0;">
+      <div class="tt-wrap">
+        <div class="tf-layout">
+          <div class="tf-main">
+            <div class="tf-status" id="tf-status" role="status" aria-live="polite">Search a topic above to see what's trending.</div>
+            <div class="tf-results" id="tf-results" aria-live="polite"></div>
+          </div>
+
+          <aside class="tf-panel" aria-label="Extracted ideas">
+            <div class="tf-panel__head">
+              <span class="tf-panel__title">Idea panel</span>
+              <span class="tf-panel__count" id="tf-count">0</span>
+            </div>
+            <ul class="tf-board" id="tf-board"></ul>
+            <div class="tf-panel__foot">
+              <div class="tf-panel__row">
+                <button type="button" class="tf-panel__act" id="tf-preview" disabled>Preview</button>
+                <button type="button" class="tf-panel__act tf-panel__act--gold" id="tf-export" disabled>Export CSV</button>
+              </div>
+              <div class="tf-panel__row">
+                <button type="button" class="tf-panel__clear" id="tf-clear">Clear all</button>
+                <button type="button" class="tt-btn tf-panel__keep" id="tf-keep" disabled>Keep checked</button>
+              </div>
+            </div>
+          </aside>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- ============================ EXPORT PREVIEW MODAL ============================ -->
+  <div class="tf-pv" id="tf-pv" role="dialog" aria-modal="true" aria-labelledby="tf-pv-title">
+    <div class="tf-pv__panel">
+      <button type="button" class="tf-pv__close" data-pv-close aria-label="Close">&times;</button>
+      <span class="tt-eyebrow">Export preview</span>
+      <h2 class="tf-pv__title" id="tf-pv-title">Selected ideas</h2>
+      <p class="tf-pv__lead" id="tf-pv-lead"></p>
+      <div class="tf-pv__scroll">
+        <table class="tf-pv__table" id="tf-pv-table"></table>
+      </div>
+      <div class="tf-pv__foot">
+        <button type="button" class="tf-panel__clear" data-pv-close>Close</button>
+        <button type="button" class="tt-btn tf-pv__dl" id="tf-pv-dl">Download CSV</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- toast -->
+  <div class="tf-toast" id="tf-toast" role="status" aria-live="polite"></div>
+
+  <!-- ============================ FOOTER ============================ -->
+  <footer class="tt-footer">
+    <div class="tt-wrap">
+      <div class="tt-footer__top">
+        <div class="tt-footer__brand">
+          <a class="tt-logo" href="index.html" aria-label="Tester Tech — back to home"><svg class="tt-logo__home" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 11.5 12 4l9 7.5"/><path d="M5 10v9a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-9"/></svg> TESTER<span class="t2">TECH</span></a>
+          <p>Premium consumer technology, engineered to the micron and built to be inherited, not replaced.</p>
+          <div class="tt-socials">
+            <a href="https://x.com/testertech" target="_blank" rel="noopener noreferrer" aria-label="Tester Tech on X / Twitter"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M18.9 2H22l-7 8 8.2 12h-6.4l-5-7.3L6 22H2.9l7.5-8.6L2.5 2h6.6l4.5 6.6L18.9 2zm-1.1 18h1.7L7.3 3.8H5.5L17.8 20z"/></svg></a>
+            <a href="https://instagram.com/testertech" target="_blank" rel="noopener noreferrer" aria-label="Tester Tech on Instagram"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/></svg></a>
+            <a href="https://youtube.com/@testertech" target="_blank" rel="noopener noreferrer" aria-label="Tester Tech on YouTube"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><rect x="2.5" y="6" width="19" height="12" rx="4"/><path d="M10 9.2l5 2.8-5 2.8z" fill="currentColor" stroke="none"/></svg></a>
+            <a href="https://github.com/testertech" target="_blank" rel="noopener noreferrer" aria-label="Tester Tech on GitHub"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2a10 10 0 00-3.16 19.49c.5.09.68-.22.68-.48v-1.7c-2.78.6-3.37-1.34-3.37-1.34-.45-1.16-1.11-1.47-1.11-1.47-.91-.62.07-.61.07-.61 1 .07 1.53 1.03 1.53 1.03.9 1.53 2.36 1.09 2.94.83.09-.65.35-1.09.63-1.34-2.22-.25-4.55-1.11-4.55-4.94 0-1.09.39-1.98 1.03-2.68-.1-.25-.45-1.27.1-2.65 0 0 .84-.27 2.75 1.02a9.5 9.5 0 015 0c1.91-1.29 2.75-1.02 2.75-1.02.55 1.38.2 2.4.1 2.65.64.7 1.03 1.59 1.03 2.68 0 3.84-2.34 4.69-4.57 4.94.36.31.68.92.68 1.85v2.74c0 .27.18.58.69.48A10 10 0 0012 2z"/></svg></a>
+          </div>
+        </div>
+        <div class="tt-fcol">
+          <h4>Shop</h4>
+          <a href="TesterTech.html#featured">Featured</a>
+          <a href="TesterTech.html#best">Best Sellers</a>
+          <a href="TesterTech.html#new">New Arrivals</a>
+          <a href="TesterTech.html#deals">Deals</a>
+        </div>
+        <div class="tt-fcol">
+          <h4>Company</h4>
+          <a href="TesterTech.html#about">About</a>
+          <a href="careers.html">Careers</a>
+          <a href="press.html">Press</a>
+          <a href="sustainability.html">Sustainability</a>
+          <a href="trend-finder.html" aria-current="page">Trend Finder</a>
+        </div>
+        <div class="tt-fcol">
+          <h4>Get in touch</h4>
+          <address>
+            <span>hello@testertech.com</span>
+            <span>+1 (800) 555-0142</span>
+            <span>140 Micron Way, San Francisco, CA</span>
+            <span>Mon–Fri · 9am–6pm PT</span>
+          </address>
+        </div>
+      </div>
+      <div class="tt-footer__bottom">
+        <span>© 2026 Tester Tech — A Tester Laboratories brand</span>
+        <div class="tt-footer__legal">
+          <a href="privacy.html">Privacy</a><a href="terms.html">Terms</a><a href="returns.html">Returns</a>
+        </div>
+        <div class="tt-pay"><span>Visa</span><span>Mastercard</span><span>Amex</span><span>Apple Pay</span></div>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    (function () {
+      "use strict";
+      document.documentElement.classList.add("js");
+      var nav = document.querySelector(".tt-nav");
+      var onScroll = function () { if (nav) nav.classList.toggle("scrolled", window.scrollY > 12); };
+      window.addEventListener("scroll", onScroll, { passive: true });
+      onScroll();
+      var reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+      var items = Array.prototype.slice.call(document.querySelectorAll(".tt-reveal"));
+      if (reduce || !("IntersectionObserver" in window)) {
+        items.forEach(function (el) { el.classList.add("in"); });
+      } else {
+        var io = new IntersectionObserver(function (entries) {
+          entries.forEach(function (e) {
+            if (e.isIntersecting) {
+              var d = parseInt(e.target.getAttribute("data-delay") || "0", 10);
+              setTimeout(function () { e.target.classList.add("in"); }, d * 80);
+              io.unobserve(e.target);
+            }
+          });
+        }, { threshold: 0.12, rootMargin: "0px 0px -6% 0px" });
+        items.forEach(function (el) { io.observe(el); });
+      }
+    })();
+  </script>
+
+  <script>
+    /* ===== Trend Finder — search + extract + idea board ===== */
+    (function () {
+      "use strict";
+      var form = document.getElementById("tf-form");
+      var input = document.getElementById("tf-input");
+      var submit = document.getElementById("tf-submit");
+      var statusEl = document.getElementById("tf-status");
+      var resultsEl = document.getElementById("tf-results");
+      var boardEl = document.getElementById("tf-board");
+      var countEl = document.getElementById("tf-count");
+      var clearBtn = document.getElementById("tf-clear");
+      var keepBtn = document.getElementById("tf-keep");
+      var previewBtn = document.getElementById("tf-preview");
+      var exportBtn = document.getElementById("tf-export");
+      var toastEl = document.getElementById("tf-toast");
+
+      var pvModal = document.getElementById("tf-pv");
+      var pvTable = document.getElementById("tf-pv-table");
+      var pvLead = document.getElementById("tf-pv-lead");
+      var pvDl = document.getElementById("tf-pv-dl");
+
+      // Escape user/remote text before putting it in the DOM.
+      function esc(s) {
+        return String(s == null ? "" : s)
+          .replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;")
+          .replace(/"/g, "&quot;").replace(/'/g, "&#39;");
+      }
+
+      var placeholderSvg =
+        '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" aria-hidden="true">' +
+        '<rect x="3" y="4" width="18" height="16" rx="2"/><path d="M3 15l5-5 4 4 3-3 6 6"/><circle cx="9" cy="9" r="1.6"/></svg>';
+
+      function setStatus(html) { statusEl.innerHTML = html; }
+
+      var toastT;
+      function toast(msg) {
+        toastEl.textContent = msg;
+        toastEl.classList.add("show");
+        clearTimeout(toastT);
+        toastT = setTimeout(function () { toastEl.classList.remove("show"); }, 2000);
+      }
+
+      // ---------- Idea board (persisted to localStorage) ----------
+      var BOARD_KEY = "tf_idea_board";
+      var board = [];
+      try {
+        var saved = JSON.parse(localStorage.getItem(BOARD_KEY) || "[]");
+        if (Array.isArray(saved)) {
+          board = saved.map(function (b) { return { idea: b.idea, from: b.from || "", url: b.url || "", checked: b.checked !== false }; });
+        }
+      } catch (e) {}
+
+      function persist() { try { localStorage.setItem(BOARD_KEY, JSON.stringify(board)); } catch (e) {} }
+      function keyOf(it) { return (it.url || "") + "||" + (it.idea || "").toLowerCase().trim(); }
+
+      function checkedCount() {
+        return board.reduce(function (n, b) { return n + (b.checked ? 1 : 0); }, 0);
+      }
+      function selectedIdeas() {
+        return board.filter(function (b) { return b.checked; });
+      }
+
+      // Keep the footer controls in sync with how many ideas are ticked.
+      function syncControls() {
+        var kept = checkedCount();
+        keepBtn.disabled = kept === 0;
+        keepBtn.textContent = kept ? "Keep " + kept + " checked" : "Keep checked";
+        previewBtn.disabled = kept === 0;
+        exportBtn.disabled = kept === 0;
+      }
+
+      function renderBoard() {
+        countEl.textContent = board.length;
+        syncControls();
+        if (!board.length) {
+          boardEl.innerHTML = '<li class="tf-board__empty">No ideas yet. Use <b>Extract ideas</b> on a result card to pull its ranked list in here, then untick anything you don’t want and hit <b>Keep checked</b>.</li>';
+          return;
+        }
+        boardEl.innerHTML = board.map(function (it, idx) {
+          return '<li class="tf-board__item' + (it.checked ? '' : ' is-off') + '">' +
+              '<label class="tf-board__label">' +
+                '<input type="checkbox" class="tf-board__box" data-idx="' + idx + '"' + (it.checked ? ' checked' : '') + '>' +
+                '<span class="tf-board__txt">' +
+                  '<span class="tf-board__idea">' + esc(it.idea) + '</span>' +
+                  (it.from ? '<span class="tf-board__src">from ' + esc(it.from) + '</span>' : '') +
+                '</span>' +
+              '</label>' +
+              '<button type="button" class="tf-board__rm" data-idx="' + idx + '" aria-label="Remove idea">&times;</button>' +
+            '</li>';
+        }).join("");
+      }
+
+      // New ideas land in the panel ticked by default — the user unticks what they don't want.
+      function addIdeas(list, from, url) {
+        var seen = {};
+        board.forEach(function (b) { seen[keyOf(b)] = true; });
+        var added = 0;
+        list.forEach(function (it) {
+          var idea = ((it && (it.idea || it.text)) || "").trim();
+          if (!idea) return;
+          var entry = { idea: idea, from: from || "", url: url || "", checked: true };
+          var k = keyOf(entry);
+          if (seen[k]) return;
+          seen[k] = true; board.push(entry); added++;
+        });
+        if (added) { persist(); renderBoard(); }
+        return added;
+      }
+
+      boardEl.addEventListener("change", function (e) {
+        var box = e.target.closest(".tf-board__box");
+        if (!box) return;
+        var idx = parseInt(box.getAttribute("data-idx"), 10);
+        if (board[idx]) {
+          board[idx].checked = box.checked;
+          box.closest(".tf-board__item").classList.toggle("is-off", !box.checked);
+          persist();
+          syncControls();
+        }
+      });
+      boardEl.addEventListener("click", function (e) {
+        var rm = e.target.closest(".tf-board__rm");
+        if (!rm) return;
+        var idx = parseInt(rm.getAttribute("data-idx"), 10);
+        if (idx >= 0) { board.splice(idx, 1); persist(); renderBoard(); }
+      });
+      // Keep checked → drop the unticked ideas, leaving only the ones worth keeping.
+      keepBtn.addEventListener("click", function () {
+        var kept = checkedCount();
+        if (!kept) return;
+        var dropped = board.length - kept;
+        board = board.filter(function (b) { return b.checked; });
+        persist(); renderBoard();
+        toast(dropped ? ("Kept " + kept + ", removed " + dropped) : ("Kept all " + kept + " idea" + (kept === 1 ? "" : "s")));
+      });
+      clearBtn.addEventListener("click", function () {
+        if (!board.length) return;
+        if (window.confirm("Clear all " + board.length + " idea(s) from the panel?")) { board = []; persist(); renderBoard(); }
+      });
+      renderBoard();
+
+      // ---------- Data controls: Preview + Export CSV ----------
+      // RFC-4180 cell: wrap in quotes and double any embedded quote when the value
+      // contains a comma, quote or newline, so Excel/Sheets parse columns cleanly.
+      function csvCell(v) {
+        var s = String(v == null ? "" : v);
+        return /[",\r\n]/.test(s) ? '"' + s.replace(/"/g, '""') + '"' : s;
+      }
+      function exportRows(items) {
+        var rows = [["#", "Idea", "Source", "Link"]];
+        items.forEach(function (it, i) { rows.push([i + 1, it.idea, it.from || "", it.url || ""]); });
+        return rows;
+      }
+      function downloadCSV(items) {
+        // CRLF line breaks + a UTF-8 BOM so Excel opens accented text correctly.
+        var csv = exportRows(items).map(function (r) { return r.map(csvCell).join(","); }).join("\r\n");
+        var blob = new Blob(["﻿" + csv], { type: "text/csv;charset=utf-8;" });
+        var url = URL.createObjectURL(blob);
+        var a = document.createElement("a");
+        a.href = url; a.download = "trend-finder-ideas.csv";
+        document.body.appendChild(a); a.click(); document.body.removeChild(a);
+        setTimeout(function () { URL.revokeObjectURL(url); }, 1000);
+      }
+      function doExport() {
+        var items = selectedIdeas();
+        if (!items.length) { toast("Tick at least one idea to export"); return; }
+        downloadCSV(items);
+        toast("Exported " + items.length + " idea" + (items.length === 1 ? "" : "s") + " to CSV");
+      }
+
+      function openPreview() {
+        var items = selectedIdeas();
+        if (!items.length) { toast("Tick at least one idea to preview"); return; }
+        pvLead.textContent = items.length + " selected idea" + (items.length === 1 ? "" : "s") + " — this is exactly what the CSV will contain.";
+        var head = '<thead><tr><th class="tf-pv__num">#</th><th>Idea</th><th>Source</th><th>Link</th></tr></thead>';
+        var body = items.map(function (it, i) {
+          var link = it.url
+            ? '<a href="' + esc(it.url) + '" target="_blank" rel="noopener noreferrer">' + esc(it.url) + '</a>'
+            : '<span style="color:var(--muted)">—</span>';
+          return '<tr><td class="tf-pv__num">' + (i + 1) + '</td><td>' + esc(it.idea) + '</td><td>' + esc(it.from || "—") + '</td><td>' + link + '</td></tr>';
+        }).join("");
+        pvTable.innerHTML = head + '<tbody>' + body + '</tbody>';
+        pvModal.classList.add("open"); document.body.style.overflow = "hidden";
+      }
+      function closePreview() { pvModal.classList.remove("open"); document.body.style.overflow = ""; }
+
+      previewBtn.addEventListener("click", openPreview);
+      exportBtn.addEventListener("click", doExport);
+      pvDl.addEventListener("click", function () { doExport(); closePreview(); });
+      pvModal.addEventListener("click", function (e) { if (e.target === pvModal || e.target.closest("[data-pv-close]")) closePreview(); });
+      document.addEventListener("keydown", function (e) { if (e.key === "Escape" && pvModal.classList.contains("open")) closePreview(); });
+
+      // ---------- Result cards ----------
+      function renderCard(r, i) {
+        var title = r.title || r.name || "";
+        var link = r.link || r.url || "#";
+        var thumb = r.thumbnail || r.image || "";
+        // Favicon fallbacks are small logos — show them centered, not cover-stretched.
+        var isLogo = /s2\/favicons/.test(thumb);
+        // Route thumbnails through the Node image proxy so Reddit/news images load.
+        var src = thumb ? "/img?url=" + encodeURIComponent(thumb) : "";
+        var media = src
+          ? '<div class="tf-card__media' + (isLogo ? ' tf-card__media--logo' : '') + '"><img src="' + esc(src) + '" alt="' + esc(title) + '" loading="lazy" referrerpolicy="no-referrer" onerror="this.closest(\'.tf-card\').querySelector(\'.tf-card__media\').outerHTML=\'<div class=&quot;tf-card__media tf-card__media--none&quot;>' + placeholderSvg.replace(/"/g, "&quot;") + '</div>\'" /></div>'
+          : '<div class="tf-card__media tf-card__media--none">' + placeholderSvg + '</div>';
+        var data = ' data-url="' + esc(link) + '" data-title="' + esc(title) + '"';
+        return (
+          '<article class="tf-card">' +
+            media +
+            '<div class="tf-card__body">' +
+              '<span class="tf-rank">Rank ' + (i + 1) + '</span>' +
+              '<h3 class="tf-card__name"><a href="' + esc(link) + '" target="_blank" rel="noopener noreferrer">' + esc(title) + '</a></h3>' +
+              '<span class="tf-card__src">' + esc(r.source || "") + '</span>' +
+              '<div class="tf-card__actions">' +
+                '<button type="button" class="tf-card__act tf-card__act--gold" data-action="extract"' + data + '>Extract ideas</button>' +
+              '</div>' +
+            '</div>' +
+          '</article>'
+        );
+      }
+
+      // ---------- Search → cards (data from Flask :5001 via the Node proxy) ----------
+      form.addEventListener("submit", function (e) {
+        e.preventDefault();
+        var q = (input.value || "").trim();
+        if (!q) { input.focus(); return; }
+        submit.disabled = true;
+        resultsEl.innerHTML = "";
+        setStatus('<span class="tf-spin"></span>Searching the web for “' + esc(q) + '”…');
+        fetch("/api/trending?q=" + encodeURIComponent(q))
+          .then(function (res) { if (!res.ok) throw new Error("Server responded " + res.status); return res.json(); })
+          .then(function (data) {
+            var results = (data && data.results) || [];
+            if (!results.length) { setStatus("No trends found for “" + esc(q) + "”. Try a different topic."); return; }
+            setStatus("Top " + results.length + " trending result" + (results.length === 1 ? "" : "s") + " for “" + esc(q) + "” — extract ideas into the panel →");
+            resultsEl.innerHTML = results.map(renderCard).join("");
+          })
+          .catch(function (err) { setStatus('<span class="tf-err">Something went wrong: ' + esc(err.message) + ". Please try again.</span>"); })
+          .finally(function () { submit.disabled = false; });
+      });
+
+      // ---------- Shared extract call (Gemini-backed, via /api/extract) ----------
+      function fetchExtract(url) {
+        return fetch("/api/extract?url=" + encodeURIComponent(url)).then(function (res) {
+          return res.json().then(function (data) {
+            if (!res.ok) throw new Error(data && data.error ? data.error : "Server responded " + res.status);
+            return data;
+          });
+        });
+      }
+
+      // ---------- Card buttons (delegated) ----------
+      resultsEl.addEventListener("click", function (e) {
+        var btn = e.target.closest(".tf-card__act");
+        if (!btn) return;
+        var action = btn.getAttribute("data-action");
+        var url = btn.getAttribute("data-url");
+        var title = btn.getAttribute("data-title") || "Article";
+        if (!url || url === "#") return;
+        if (action === "extract") doExtract(btn, url, title);
+      });
+
+      // Google News serves browser-only redirect links; news.google.com URLs the server
+      // couldn't decode need the reader to open + paste the real article URL by hand.
+      function isGoogleNews(url) {
+        try { return /(^|\.)news\.google\.com$/i.test(new URL(url).hostname); }
+        catch (e) { return false; }
+      }
+      // A 502 fetch/read failure is the signature of an un-followable redirect (vs. a
+      // missing API key or a Gemini error, which we'd rather surface verbatim).
+      function looksLikeRedirectFail(msg) {
+        return /fetch or read|read that article|could not fetch|could not read/i.test(msg || "");
+      }
+
+      // Extract ideas → pull the article's ranked list into the idea panel as checkbox items.
+      function doExtract(btn, url, title) {
+        var card = btn.closest(".tf-card");
+        var label = btn.textContent;
+        btn.disabled = true; btn.textContent = "Extracting…";
+        clearGnewsWarning(card);
+        fetchExtract(url)
+          .then(function (data) {
+            var items = data.items || [];
+            var resolved = data.url || url;
+            if (!items.length) {
+              // Empty list on a still-undecoded Google News link → offer the manual workaround.
+              if (isGoogleNews(resolved)) showGnewsWarning(card, resolved, title);
+              else toast("No idea list found in that article");
+              return;
+            }
+            var n = addIdeas(items, data.title || title, resolved);
+            toast(n ? ("Added " + n + " idea" + (n === 1 ? "" : "s") + " to the panel") : "Those ideas are already in the panel");
+          })
+          .catch(function (err) {
+            if (isGoogleNews(url) && looksLikeRedirectFail(err.message)) showGnewsWarning(card, url, title);
+            else toast(err.message.slice(0, 70));
+          })
+          .finally(function () { btn.disabled = false; btn.textContent = label; });
+      }
+
+      // ---------- Google News manual-resolve warning ----------
+      function clearGnewsWarning(card) {
+        if (!card) return;
+        var w = card.querySelector(".tf-gnews");
+        if (w) w.remove();
+      }
+
+      function showGnewsWarning(card, url, title) {
+        if (!card) return;
+        clearGnewsWarning(card);
+        var body = card.querySelector(".tf-card__body") || card;
+        var wrap = document.createElement("div");
+        wrap.className = "tf-gnews";
+        wrap.innerHTML =
+          '<div class="tf-gnews__head">' +
+            '<svg class="tf-gnews__ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 9v4M12 17h.01M10.3 3.9 1.8 18a2 2 0 0 0 1.7 3h17a2 2 0 0 0 1.7-3L13.7 3.9a2 2 0 0 0-3.4 0z"/></svg>' +
+            '<span>Google News link — one manual step</span>' +
+          '</div>' +
+          '<p class="tf-gnews__txt">Google News hides the real article behind a browser-only redirect a server can’t follow. Open it, let it land on the real article (GQ, Forbes, Wirecutter…), copy that URL from your address bar, and paste it below.</p>' +
+          '<a class="tf-gnews__open" href="' + esc(url) + '" target="_blank" rel="noopener noreferrer">Open article ' +
+            '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M7 17 17 7M9 7h8v8"/></svg></a>' +
+          '<div class="tf-gnews__row">' +
+            '<input type="url" class="tf-gnews__input" placeholder="Paste the real article URL, then press Enter" aria-label="Paste the real article URL" />' +
+            '<button type="button" class="tf-gnews__go">Fetch</button>' +
+          '</div>' +
+          '<div class="tf-gnews__status" role="status" aria-live="polite"></div>';
+        body.appendChild(wrap);
+
+        var inputEl = wrap.querySelector(".tf-gnews__input");
+        var goBtn = wrap.querySelector(".tf-gnews__go");
+        var statusEl = wrap.querySelector(".tf-gnews__status");
+        function run() { resolveFromPasted(card, inputEl.value, title, statusEl, inputEl, goBtn); }
+        goBtn.addEventListener("click", run);
+        inputEl.addEventListener("keydown", function (e) { if (e.key === "Enter") { e.preventDefault(); run(); } });
+        inputEl.focus();
+      }
+
+      function setWarnStatus(el, html, isErr) {
+        el.innerHTML = isErr ? '<span class="tf-gnews__err">' + html + '</span>' : html;
+      }
+
+      // Fetch + extract from the URL the reader pasted after following the redirect.
+      function resolveFromPasted(card, raw, fallbackTitle, statusEl, inputEl, goBtn) {
+        var u = (raw || "").trim();
+        if (!/^https?:\/\//i.test(u)) {
+          setWarnStatus(statusEl, "Paste a full http(s) link from your browser’s address bar.", true);
+          return;
+        }
+        if (isGoogleNews(u)) {
+          setWarnStatus(statusEl, "That’s still a Google News link — open it first, then copy the article URL it lands on.", true);
+          return;
+        }
+        goBtn.disabled = true; inputEl.disabled = true;
+        setWarnStatus(statusEl, '<span class="tf-spin"></span>Fetching the real article…');
+        fetchExtract(u)
+          .then(function (data) {
+            var items = data.items || [];
+            if (!items.length) { setWarnStatus(statusEl, "No idea list found at that link — try a different article.", true); return; }
+            var n = addIdeas(items, data.title || fallbackTitle, data.url || u);
+            clearGnewsWarning(card);
+            toast(n ? ("Added " + n + " idea" + (n === 1 ? "" : "s") + " to the panel") : "Those ideas are already in the panel");
+          })
+          .catch(function (err) { setWarnStatus(statusEl, esc(err.message.slice(0, 90)), true); })
+          .finally(function () { goBtn.disabled = false; inputEl.disabled = false; });
+      }
+    })();
+  </script>
+  <script src="js/catalog.js"></script>
+  <script src="js/cart.js"></script>
+  <script src="js/search.js"></script>
+</body>
+</html>

@@ -1,0 +1,398 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%232E2823'/%3E%3Crect x='11' y='11' width='10' height='10' fill='%23C4623D' transform='rotate(45 16 16)'/%3E%3C/svg%3E" />
+<title>Rhealyn Ballar — Virtual Assistant &amp; Web Builder</title>
+<meta name="description" content="Rhealyn Ballar — Virtual Assistant & Web Builder. 8+ years of administrative and customer-support experience, paired with a craft for building polished, animated websites." />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..700;1,9..144,400..600&family=Hanken+Grotesk:wght@300;400;500;600&display=swap" rel="stylesheet" />
+<style>
+  :root{
+    /* ---- palette (warm, minimal) ---- */
+    --bg:#FBF7F1;            /* warm ivory / cream */
+    --surface:#EFE7DA;       /* soft warm neutral — cards/sections */
+    --surface-2:#F5EFE5;     /* slightly lighter card fill */
+    --ink:#2E2823;           /* deep warm espresso — text */
+    --ink-soft:#6E635A;      /* muted body / labels */
+    --accent:#C4623D;        /* terracotta — primary accent */
+    --accent-deep:#A9502F;
+    --accent-2:#E0913E;      /* warm honey-amber — complementary pop */
+    --grad:linear-gradient(120deg,#C4623D 0%,#E0913E 100%); /* signature warm gradient */
+    --line:rgba(46,40,35,.12);
+    --shadow:0 26px 60px -34px rgba(46,40,35,.32);
+    --shadow-warm:0 26px 56px -30px rgba(196,98,61,.42); /* warm-tinted lift */
+
+    /* ---- type ---- */
+    --serif:"Fraunces",Georgia,serif;
+    --sans:"Hanken Grotesk",system-ui,sans-serif;
+
+    /* ---- spacing scale (consistent rhythm everywhere) ---- */
+    --s-1:.5rem; --s-2:.875rem; --s-3:1.25rem; --s-4:2rem;
+    --s-5:3rem; --s-6:4.5rem; --s-section:7rem;
+    --radius:12px;
+    --maxw:1100px;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth}
+  body{
+    font-family:var(--sans);color:var(--ink);
+    line-height:1.65;font-size:1rem;font-weight:400;
+    -webkit-font-smoothing:antialiased;overflow-x:hidden;
+    background:
+      radial-gradient(1100px 760px at 8% -6%, rgba(196,98,61,.16), transparent 58%),
+      radial-gradient(950px 680px at 104% 4%, rgba(224,145,62,.17), transparent 55%),
+      radial-gradient(900px 720px at 50% 112%, rgba(196,98,61,.10), transparent 60%),
+      var(--bg);
+    background-attachment:fixed;
+  }
+  /* subtle warm grain for texture */
+  body::before{content:"";position:fixed;inset:0;z-index:0;pointer-events:none;opacity:.045;
+    background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");}
+  .wrap{position:relative;z-index:1;max-width:var(--maxw);margin:0 auto;padding:0 28px}
+  /* animated gradient brand bar */
+  .brandbar{position:fixed;top:0;left:0;right:0;height:4px;background:var(--grad);background-size:220% 100%;z-index:200;animation:shimmer 9s linear infinite}
+  @keyframes shimmer{to{background-position:220% 0}}
+  @media(prefers-reduced-motion:reduce){.brandbar{animation:none}}
+
+  /* ---------- NAV ---------- */
+  nav{display:flex;justify-content:space-between;align-items:center;padding:var(--s-4) 0 var(--s-3)}
+  .brand{font-family:var(--serif);font-weight:600;font-size:1.3rem;letter-spacing:-.015em}
+  .nav-links{display:flex;gap:var(--s-5);font-size:.78rem;text-transform:uppercase;letter-spacing:.16em;font-weight:500}
+  .nav-links a{color:var(--ink-soft);text-decoration:none;transition:color .3s;position:relative;padding-bottom:4px}
+  .nav-links a:hover{color:var(--ink)}
+  .nav-links a.active{color:var(--ink)}
+  .nav-links a.active::after{content:"";position:absolute;left:0;bottom:-4px;width:100%;height:2px;background:var(--grad)} /* active item */
+
+  /* ---------- recurring motif ---------- */
+  .mark{width:9px;height:9px;background:var(--grad);transform:rotate(45deg);flex:none;display:inline-block;box-shadow:0 2px 8px -2px rgba(196,98,61,.5)} /* gradient diamond */
+  .rule{display:block;width:56px;height:3px;background:var(--grad);background-size:220% 100%;border-radius:2px;margin-top:var(--s-3);animation:shimmer 7s linear infinite} /* shimmering warm underline */
+  @media(prefers-reduced-motion:reduce){.rule{animation:none}}
+
+  /* ---------- HERO (oversized, the signature moment) ---------- */
+  .hero{display:grid;grid-template-columns:1.15fr .85fr;gap:var(--s-6);align-items:center;padding:var(--s-5) 0 var(--s-section)}
+  .eyebrow{display:inline-flex;align-items:center;gap:11px;font-size:.74rem;text-transform:uppercase;letter-spacing:.3em;color:var(--ink-soft);font-weight:600;margin-bottom:var(--s-4)}
+  h1{font-family:var(--serif);font-weight:380;line-height:.94;font-size:clamp(3.4rem,9vw,6.6rem);letter-spacing:-.035em;background:linear-gradient(108deg,var(--ink) 42%,var(--accent) 82%,var(--accent-2) 100%);-webkit-background-clip:text;background-clip:text;color:transparent}
+  .title-line{margin-top:var(--s-3);font-family:var(--serif);font-style:italic;font-size:clamp(1.25rem,2.6vw,1.9rem);color:var(--ink-soft)}
+  .title-line .rule{margin-top:var(--s-3)}
+  .bio{margin-top:var(--s-4);font-size:1.06rem;color:var(--ink-soft);max-width:46ch;font-weight:350}
+  .bio strong{color:var(--ink);font-weight:600}
+  .chips{display:flex;flex-wrap:wrap;gap:var(--s-2);margin-top:var(--s-4)}
+  .chip{font-size:.78rem;letter-spacing:.02em;padding:8px 15px;border-radius:999px;border:1px solid var(--line);background:var(--surface);color:var(--ink)}
+  .cta{display:flex;gap:var(--s-2);margin-top:var(--s-4);flex-wrap:wrap}
+  .btn{font-size:.84rem;font-weight:600;letter-spacing:.03em;text-decoration:none;padding:14px 28px;border-radius:4px;transition:transform .25s,box-shadow .25s,background .25s}
+  .btn-primary{background:var(--grad);color:#fff;box-shadow:0 16px 34px -16px rgba(196,98,61,.75)} /* gradient button */
+  .btn-primary:hover{filter:brightness(1.05) saturate(1.06);transform:translateY(-2px);box-shadow:0 20px 40px -16px rgba(196,98,61,.85)}
+  .btn-ghost{border:1px solid var(--ink);color:var(--ink)}
+  .btn-ghost:hover{background:var(--ink);color:var(--bg)}
+
+  .portrait{position:relative}
+  .portrait::before{content:"";position:absolute;inset:-16px -16px 24px 24px;border:1.5px solid var(--accent);border-radius:6px;z-index:0;background:linear-gradient(135deg,rgba(224,145,62,.08),transparent 60%)} /* signature frame + faint warm wash */
+  .portrait img{position:relative;z-index:1;width:100%;aspect-ratio:4/5;object-fit:cover;border-radius:6px;box-shadow:var(--shadow);filter:saturate(.96) contrast(1.02)}
+  .badge{position:absolute;z-index:2;bottom:-20px;left:-20px;background:var(--grad);color:#fff;padding:16px 20px;border-radius:4px;font-family:var(--serif);line-height:1;box-shadow:var(--shadow-warm)}
+  .badge b{display:block;font-size:1.9rem;font-weight:600}
+  .badge small{font-size:.64rem;letter-spacing:.2em;text-transform:uppercase;opacity:.92}
+
+  /* ---------- SECTION SHELL ---------- */
+  .section{padding:var(--s-section) 0;border-top:1px solid var(--line)}
+  .sec-head{margin-bottom:var(--s-5)}
+  .sec-eyebrow{display:inline-flex;align-items:center;gap:11px;font-size:.72rem;text-transform:uppercase;letter-spacing:.28em;color:var(--ink-soft);font-weight:600;margin-bottom:var(--s-2)}
+  .sec-head h2{font-family:var(--serif);font-weight:480;font-size:clamp(2rem,4.5vw,3rem);letter-spacing:-.025em;line-height:1.02}
+
+  /* ---------- SKILLS ---------- */
+  .skills{display:grid;grid-template-columns:repeat(3,1fr);gap:var(--s-3)}
+  .skill-col{position:relative;background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);padding:var(--s-4);transition:transform .4s cubic-bezier(.2,.7,.2,1),box-shadow .4s;overflow:hidden}
+  .skill-col::before{content:"";position:absolute;left:0;right:0;top:0;height:3px;background:var(--grad);transform:scaleX(0);transform-origin:left;transition:transform .4s cubic-bezier(.2,.7,.2,1)}
+  .skill-col:hover{transform:translateY(-5px);box-shadow:var(--shadow-warm)}
+  .skill-col:hover::before{transform:scaleX(1)}
+  .skill-col h3{font-family:var(--serif);font-weight:600;font-size:1.2rem;display:flex;align-items:center;gap:11px;margin-bottom:var(--s-3)}
+  .skill-col ul{list-style:none;display:flex;flex-direction:column;gap:10px}
+  .skill-col li{font-size:.93rem;color:var(--ink-soft);padding-left:18px;position:relative}
+  .skill-col li::before{content:"";position:absolute;left:0;top:9px;width:6px;height:6px;border-radius:50%;background:var(--ink);opacity:.25}
+
+  /* ---------- EXPERIENCE (warm cards) ---------- */
+  .xp{display:flex;flex-direction:column;gap:var(--s-3)}
+  .xp-card{position:relative;background:var(--surface-2);border:1px solid var(--line);border-radius:var(--radius);padding:var(--s-4) var(--s-4);overflow:hidden;transition:transform .4s cubic-bezier(.2,.7,.2,1),box-shadow .4s}
+  .xp-card::before{content:"";position:absolute;left:0;top:0;bottom:0;width:3px;background:var(--grad);opacity:0;transition:opacity .35s} /* warm edge on hover */
+  .xp-card:hover{transform:translateY(-4px);box-shadow:var(--shadow-warm)}
+  .xp-card:hover::before{opacity:1}
+  .xp-top{display:flex;justify-content:space-between;align-items:flex-start;flex-wrap:wrap;gap:var(--s-1)}
+  .xp-role{font-family:var(--serif);font-size:1.4rem;font-weight:500;letter-spacing:-.015em}
+  .xp-co{color:var(--ink-soft);font-weight:600;font-size:.95rem;margin-top:3px}
+  .xp-when{font-size:.76rem;letter-spacing:.12em;text-transform:uppercase;color:var(--ink-soft);font-weight:600;white-space:nowrap;padding-top:6px}
+  .xp-tag{display:inline-block;font-size:.62rem;letter-spacing:.16em;text-transform:uppercase;color:#fff;background:var(--accent);border-radius:999px;padding:3px 11px;margin-left:12px;vertical-align:middle} /* terracotta 'current' chip */
+  .xp ul{list-style:none;margin-top:var(--s-3);display:flex;flex-direction:column;gap:9px}
+  .xp li{font-size:.95rem;color:var(--ink-soft);padding-left:20px;position:relative}
+  .xp li::before{content:"";position:absolute;left:0;top:9px;width:6px;height:6px;border-radius:50%;background:var(--ink);opacity:.25}
+  .earlier{margin-top:var(--s-1);font-size:.9rem;color:var(--ink-soft);padding-left:2px}
+  .earlier b{color:var(--ink);font-weight:600}
+
+  /* ---------- PROJECT HIGHLIGHTS ---------- */
+  .reel{position:relative;margin-bottom:var(--s-4);border-radius:var(--radius);overflow:hidden;box-shadow:var(--shadow-warm);background:#211c18;border:1px solid var(--line)}
+  .reel video{display:block;width:100%;height:auto}
+  .reel-tag{position:absolute;left:18px;top:16px;z-index:2;display:inline-flex;align-items:center;gap:8px;background:rgba(33,28,24,.55);backdrop-filter:blur(6px);color:#fff;font-size:.7rem;letter-spacing:.16em;text-transform:uppercase;padding:7px 13px;border-radius:999px}
+  .reel-tag i,.thumb .live i{width:7px;height:7px;border-radius:50%;background:var(--accent);display:inline-block;animation:pulse 1.8s infinite}
+  @keyframes pulse{0%,100%{opacity:1}50%{opacity:.3}}
+  .grid{display:grid;grid-template-columns:1fr 1fr;gap:var(--s-4)}
+  .tile{display:flex;flex-direction:column;background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);overflow:hidden;transition:transform .4s cubic-bezier(.2,.7,.2,1),box-shadow .4s}
+  .tile:hover{transform:translateY(-6px);box-shadow:var(--shadow-warm)}
+  .tbody{position:relative}
+  .tbody::before{content:"";position:absolute;left:var(--s-3);top:0;width:34px;height:2px;background:var(--grad);transform:scaleX(0);transform-origin:left;transition:transform .4s cubic-bezier(.2,.7,.2,1)}
+  .tile:hover .tbody::before{transform:scaleX(1)}
+  .thumb{display:block;position:relative;aspect-ratio:16/10;overflow:hidden;background:#211c18}
+  .thumb img,.thumb video{width:100%;height:100%;object-fit:cover;object-position:top center;transition:transform .6s ease;display:block}
+  .tile:hover .thumb img,.tile:hover .thumb video{transform:scale(1.05)}
+  .thumb .live{position:absolute;right:10px;top:10px;z-index:2;display:inline-flex;align-items:center;gap:6px;background:rgba(33,28,24,.6);backdrop-filter:blur(6px);color:#fff;font-size:.58rem;letter-spacing:.12em;text-transform:uppercase;padding:5px 9px;border-radius:999px}
+  .tbody{padding:var(--s-3) var(--s-3) var(--s-4)}
+  .kicker{font-size:.66rem;letter-spacing:.16em;text-transform:uppercase;color:var(--ink-soft);font-weight:600;margin-bottom:7px}
+  .tile h3{font-family:var(--serif);font-weight:500;font-size:1.18rem;letter-spacing:-.01em;line-height:1.12}
+  .tile p{color:var(--ink-soft);margin-top:8px;font-size:.88rem}
+  .all-link{margin-top:var(--s-5);text-align:center}
+  .all-link a{font-family:var(--serif);font-style:italic;font-size:1.1rem;color:var(--accent);text-decoration:none;border-bottom:1px solid var(--accent);padding-bottom:3px;transition:color .25s,border-color .25s}
+  .all-link a:hover{color:var(--accent-deep);border-color:var(--accent-deep)}
+
+  /* ---------- EDUCATION ---------- */
+  .edu{display:flex;gap:var(--s-4);align-items:flex-start;background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);padding:var(--s-4)}
+  .edu-year{font-family:var(--serif);font-style:italic;color:var(--accent);font-size:1.05rem;white-space:nowrap;padding-top:5px}
+  .edu h3{font-family:var(--serif);font-weight:500;font-size:1.45rem;letter-spacing:-.015em;line-height:1.15}
+  .edu .school{color:var(--ink-soft);font-weight:600;margin-top:5px}
+  .edu .note{color:var(--ink-soft);font-size:.92rem;margin-top:var(--s-2);max-width:62ch}
+
+  /* ---------- CONTACT (bold espresso moment) ---------- */
+  .contact{background:var(--ink);color:var(--bg);border-radius:var(--radius);padding:var(--s-6);margin:var(--s-section) 0 var(--s-6);position:relative;overflow:hidden}
+  .contact::after{content:"";position:absolute;right:-70px;top:-70px;width:260px;height:260px;border:1px solid rgba(251,247,241,.16);border-radius:50%}
+  .contact .mark{position:absolute;right:48px;bottom:48px;width:14px;height:14px;opacity:.9}
+  .contact h2{font-family:var(--serif);font-weight:400;font-size:clamp(2.1rem,4.5vw,3.2rem);letter-spacing:-.025em;max-width:18ch;line-height:1.05}
+  .contact h2 em{font-style:italic;background:linear-gradient(120deg,#E0913E,#F0B36A);-webkit-background-clip:text;background-clip:text;color:transparent}
+  .contact p{margin-top:var(--s-3);color:rgba(251,247,241,.78);max-width:46ch}
+  .contact-links{display:flex;flex-wrap:wrap;gap:var(--s-2);margin-top:var(--s-5)}
+  .clink{display:inline-flex;align-items:center;gap:9px;font-size:.92rem;font-weight:600;text-decoration:none;padding:14px 26px;border-radius:4px;transition:transform .2s,background .25s,border-color .25s,color .25s}
+  .clink.solid{background:var(--accent);color:#fff}
+  .clink.solid:hover{background:var(--accent-deep);transform:translateY(-2px)}
+  .clink.outline{border:1px solid rgba(251,247,241,.4);color:var(--bg)}
+  .clink.outline:hover{border-color:var(--accent);color:var(--accent)}
+
+  footer{border-top:1px solid var(--line);padding:var(--s-4) 0 var(--s-5);display:flex;justify-content:space-between;font-size:.8rem;color:var(--ink-soft);flex-wrap:wrap;gap:var(--s-2)}
+
+  /* ---------- slow fade / slide-in on scroll ---------- */
+  .reveal{opacity:0;transform:translateY(30px);transition:opacity 1.05s cubic-bezier(.2,.7,.2,1),transform 1.05s cubic-bezier(.2,.7,.2,1)}
+  .reveal.in{opacity:1;transform:none}
+  @media(prefers-reduced-motion:reduce){.reveal{opacity:1;transform:none;transition:none}}
+
+  @media(max-width:860px){
+    :root{--s-section:4.5rem}
+    .hero{grid-template-columns:1fr;gap:var(--s-section)}
+    .portrait{max-width:330px}
+    .skills{grid-template-columns:1fr}
+    .grid{grid-template-columns:1fr 1fr}
+    .nav-links{gap:var(--s-3)}
+  }
+  @media(max-width:560px){.grid{grid-template-columns:1fr}.edu{flex-direction:column;gap:var(--s-2)}.nav-links{display:none}}
+</style>
+</head>
+<body>
+<div class="brandbar"></div>
+<div class="wrap">
+
+  <nav>
+    <div class="brand">Rhealyn Ballar</div>
+    <div class="nav-links">
+      <a href="index.html">Home</a>
+      <a href="about.html" class="active">About</a>
+      <a href="#projects">Projects</a>
+      <a href="#contact">Contact</a>
+    </div>
+  </nav>
+
+  <!-- 1 · HERO -->
+  <header class="hero">
+    <div class="reveal">
+      <span class="eyebrow"><span class="mark"></span>Portfolio</span>
+      <h1>Rhealyn<br/>Ballar</h1>
+      <div class="title-line">Virtual Assistant &amp; Web Builder<span class="rule"></span></div>
+      <p class="bio">I pair <strong>8+ years of administrative and customer-support experience</strong> with a growing craft for building polished, animated websites. I help busy global teams stay organized — and I build the pages and tools that make their work look good.</p>
+      <div class="chips">
+        <span class="chip">📍 Dipolog City, Philippines</span>
+        <span class="chip">🌐 Fluent English &amp; Filipino</span>
+        <span class="chip">✅ Available for remote work</span>
+      </div>
+      <div class="cta">
+        <a class="btn btn-primary" href="#contact">Get in touch</a>
+        <a class="btn btn-ghost" href="#projects">See my work</a>
+      </div>
+    </div>
+    <div class="portrait reveal">
+      <img src="profile.png" alt="Portrait of Rhealyn Ballar" />
+      <div class="badge"><b>8+</b><small>Years experience</small></div>
+    </div>
+  </header>
+
+  <!-- 2 · SKILLS -->
+  <section class="section reveal" id="skills">
+    <div class="sec-head">
+      <span class="sec-eyebrow"><span class="mark"></span>01 — Capabilities</span>
+      <h2>Skills</h2><span class="rule"></span>
+    </div>
+    <div class="skills">
+      <div class="skill-col">
+        <h3><span class="mark"></span>Frontend</h3>
+        <ul>
+          <li>HTML5 &amp; semantic markup</li>
+          <li>CSS3 — layouts, Grid &amp; Flexbox</li>
+          <li>JavaScript (vanilla)</li>
+          <li>Responsive &amp; mobile-first design</li>
+          <li>Scroll-driven &amp; frame animation</li>
+          <li>Canvas / cinematic interactions</li>
+        </ul>
+      </div>
+      <div class="skill-col">
+        <h3><span class="mark"></span>Backend &amp; Data</h3>
+        <ul>
+          <li>Node.js &amp; Express</li>
+          <li>REST APIs &amp; integrations</li>
+          <li>Supabase (database)</li>
+          <li>Cron jobs &amp; email automation</li>
+          <li>Data entry &amp; records management</li>
+          <li>AI integration (Groq, kie.ai)</li>
+        </ul>
+      </div>
+      <div class="skill-col">
+        <h3><span class="mark"></span>Tools &amp; Cloud</h3>
+        <ul>
+          <li>Git &amp; GitHub</li>
+          <li>Vercel deployment</li>
+          <li>Puppeteer &amp; FFmpeg</li>
+          <li>Shopify &amp; Amazon Seller Central</li>
+          <li>Asana, Zendesk, MS Office</li>
+          <li>Resend (email delivery)</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- 3 · EXPERIENCE -->
+  <section class="section reveal" id="experience">
+    <div class="sec-head">
+      <span class="sec-eyebrow"><span class="mark"></span>02 — Track record</span>
+      <h2>Experience</h2><span class="rule"></span>
+    </div>
+    <div class="xp">
+      <article class="xp-card">
+        <div class="xp-top">
+          <div>
+            <div class="xp-role">E-Commerce Admin Assistant</div>
+            <div class="xp-co">Piurify LLC</div>
+          </div>
+          <div class="xp-when">Jun 2024 – Apr 2026</div>
+        </div>
+        <ul>
+          <li>Delivered administrative and customer support across email, chat, and phone for a global team.</li>
+          <li>Adapted quickly to new systems, tools, and processes to keep daily operations running smoothly.</li>
+          <li>Maintained accurate records and resolved customer inquiries with professionalism and care.</li>
+        </ul>
+      </article>
+
+      <article class="xp-card">
+        <div class="xp-top">
+          <div>
+            <div class="xp-role">Traffic Planning Admin Assistant</div>
+            <div class="xp-co">Traffic Force</div>
+          </div>
+          <div class="xp-when">Jun 2023 – Jun 2024</div>
+        </div>
+        <ul>
+          <li>Coordinated traffic-planning operations, combining administrative support with day-to-day scheduling.</li>
+          <li>Applied design and analysis skills to build and optimize traffic plans.</li>
+          <li>Communicated clearly across teams to ensure accurate, on-time delivery.</li>
+        </ul>
+      </article>
+
+      <p class="earlier"><b>Earlier roles:</b> Training Administrator · AusQ Training &nbsp;•&nbsp; Sales &amp; Customer Service · EXL Philippines &nbsp;•&nbsp; Customer Service · Amazon &nbsp;•&nbsp; Customer Service · Virgin Media (via Accenture)</p>
+    </div>
+  </section>
+
+  <!-- 4 · PROJECT HIGHLIGHTS -->
+  <section class="section reveal" id="projects">
+    <div class="sec-head">
+      <span class="sec-eyebrow"><span class="mark"></span>03 — Selected work</span>
+      <h2>Project Highlights</h2><span class="rule"></span>
+    </div>
+
+    <div class="reel" aria-label="Project showcase reel">
+      <span class="reel-tag"><i></i>Showreel</span>
+      <video autoplay muted loop playsinline preload="metadata" poster="assets/reel-poster.jpg">
+        <source src="assets/reel.mp4" type="video/mp4" />
+      </video>
+    </div>
+
+    <div class="grid">
+      <article class="tile">
+        <a class="thumb" href="projects/smart-watch/index.html"><span class="live"><i></i>Live</span><video autoplay muted loop playsinline preload="none" poster="assets/shots/01-smart-watch.png"><source src="assets/previews/01-smart-watch.mp4" type="video/mp4" /></video></a>
+        <div class="tbody"><div class="kicker">E-Commerce · Multi-page</div><h3>Smart Watch Pro</h3><p>A full storefront with scroll animation, video, and a complete shopping flow.</p></div>
+      </article>
+      <article class="tile">
+        <a class="thumb" href="projects/smart-watch/Sights.html"><span class="live"><i></i>Scroll anim</span><video autoplay muted loop playsinline preload="none" poster="assets/shots/02-sights.png"><source src="assets/previews/02-sights.mp4" type="video/mp4" /></video></a>
+        <div class="tbody"><div class="kicker">Cinematic · Scroll</div><h3>Sights — Eiffel Tower</h3><p>A scroll-driven study: the tower rises frame-by-frame from blueprint into gold.</p></div>
+      </article>
+      <article class="tile">
+        <a class="thumb" href="projects/smart-watch/TesterTech.html"><span class="live"><i></i>Live</span><video autoplay muted loop playsinline preload="none" poster="assets/shots/03-tester-tech.png"><source src="assets/previews/03-tester-tech.mp4" type="video/mp4" /></video></a>
+        <div class="tbody"><div class="kicker">Brand · Storefront</div><h3>Tester Tech</h3><p>A premium consumer-tech brand storefront with a conversion-focused landing.</p></div>
+      </article>
+      <article class="tile">
+        <a class="thumb" href="projects/smart-watch/anything.html"><span class="live"><i></i>Live</span><video autoplay muted loop playsinline preload="none" poster="assets/shots/06-motion-study.png"><source src="assets/previews/06-motion-study.mp4" type="video/mp4" /></video></a>
+        <div class="tbody"><div class="kicker">Motion · Creative lab</div><h3>Motion Study 001</h3><p>An AI-generated film — titanium dissolving into liquid gold.</p></div>
+      </article>
+      <article class="tile">
+        <a class="thumb" href="projects/smart-watch/trend-finder.html"><span class="live"><i></i>Live</span><video autoplay muted loop playsinline preload="none" poster="assets/shots/04-trend-finder.png"><source src="assets/previews/04-trend-finder.mp4" type="video/mp4" /></video></a>
+        <div class="tbody"><div class="kicker">Tool · Interactive</div><h3>Trend Finder</h3><p>Search any topic and surface the top trending items from across the web.</p></div>
+      </article>
+      <article class="tile">
+        <a class="thumb" href="projects/homepage-concept/Frontend.html"><img src="assets/shots/07-moodboard.png" alt="Moodboard — Homepage Concept Generator" loading="lazy" /></a>
+        <div class="tbody"><div class="kicker">Frontend · Generative</div><h3>Moodboard Generator</h3><p>Turns a few inputs into homepage concept ideas via the kie.ai API.</p></div>
+      </article>
+    </div>
+
+    <div class="all-link"><a href="projects.html">See all projects, including the Morning Briefing automation →</a></div>
+  </section>
+
+  <!-- 5 · EDUCATION -->
+  <section class="section reveal" id="education">
+    <div class="sec-head">
+      <span class="sec-eyebrow"><span class="mark"></span>04 — Foundation</span>
+      <h2>Education</h2><span class="rule"></span>
+    </div>
+    <div class="edu">
+      <div class="edu-year">2014 – 2017</div>
+      <div>
+        <h3>Bachelor of Secondary Education, Major in Mathematics</h3>
+        <div class="school">Saint Joseph College of Sindangan, Inc.</div>
+        <p class="note">Undergraduate — completed three years of the program. Built a strong foundation in mathematics, communication, and structured problem-solving.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- 6 · CONTACT -->
+  <section class="contact reveal" id="contact">
+    <h2>Let's make your workload <em>lighter.</em></h2>
+    <p>Open to remote administrative, virtual-assistant, and web-build work. I'd love to hear what you're working on.</p>
+    <div class="contact-links">
+      <a class="clink solid" href="mailto:rhealynballar03@gmail.com">✉ rhealynballar03@gmail.com</a>
+      <a class="clink outline" href="https://wa.me/639124119378">💬 WhatsApp · +63 912 411 9378</a>
+    </div>
+    <span class="mark"></span>
+  </section>
+
+  <footer>
+    <span>© 2026 Rhealyn Ballar — Virtual Assistant &amp; Web Builder</span>
+    <span>Dipolog City, Philippines</span>
+  </footer>
+
+</div>
+<script>
+  const io=new IntersectionObserver((e)=>{e.forEach(x=>{if(x.isIntersecting){x.target.classList.add('in');io.unobserve(x.target);}});},{threshold:.12});
+  document.querySelectorAll('.reveal').forEach((el)=>io.observe(el));
+</script>
+</body>
+</html>

@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Tester · Smart Watch Pro</title>
+  <meta name="description" content="Tester Smart Watch Pro — engineered to the micron, sealed for the depths, built to outlast trends. A precision instrument for the wrist." />
+
+  <!-- Fonts: Fraunces (display serif) · Space Mono (technical) · Familjen Grotesk (body) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,500;0,9..144,600;1,9..144,300;1,9..144,500&family=Familjen+Grotesk:wght@400;500;600&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet" />
+
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+
+  <!-- progress hairline -->
+  <div id="progress"></div>
+
+  <!-- ====================== LOADER ====================== -->
+  <div id="loader">
+    <div class="loader-brand">Tester</div>
+    <div class="loader-bar"><i></i></div>
+    <div class="loader-pct">0%</div>
+  </div>
+
+  <!-- ====================== HEADER ====================== -->
+  <header class="site-header">
+    <a href="#top" class="logo"><span class="dot"></span> TESTER</a>
+    <nav class="nav-links">
+      <a class="nav-link" href="#features">Features</a>
+      <a class="nav-link" href="#dissection">Dissection</a>
+      <a class="nav-link" href="#tech">Tester Tech</a>
+      <a class="nav-link" href="anything.html">Film</a>
+      <a class="nav-link" href="Sights.html">Sights</a>
+      <a class="nav-link" href="#buy">Buy</a>
+      <a class="nav-link" href="trend-finder.html">Trend Finder</a>
+      <a class="nav-cta" href="product.html">
+        View Product
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+      </a>
+    </nav>
+  </header>
+
+  <!-- ====================== HERO ====================== -->
+  <section class="hero" id="top">
+    <video class="hero-video" autoplay muted loop playsinline preload="auto">
+      <source src="Smart%20Watch%20Dissection.mp4" type="video/mp4" />
+    </video>
+    <div class="hero-veil"></div>
+
+    <div class="hero-inner">
+      <p class="hero-label">Tester Laboratories — Est. 2026</p>
+      <h1 class="hero-heading">
+        <span class="word"><span>Smart</span></span>
+        <span class="word"><span>Watch</span></span>
+        <span class="word"><span><em>Pro</em></span></span>
+      </h1>
+      <div class="hero-foot">
+        <p class="hero-tagline">Engineered to the micron. Sealed for the depths. Built to outlast trends.</p>
+        <div class="scroll-cue"><span class="bar"></span> Scroll to dissect</div>
+      </div>
+      <div class="hero-actions">
+        <a class="btn-buy" href="Sights.html">
+          <span>Explore Sights</span>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ====================== CONTACT FORM ====================== -->
+  <section class="contact" id="contact">
+    <div class="contact-inner">
+      <p class="contact-label">Register Interest</p>
+      <h2 class="contact-heading">Join the <em>list</em>.</h2>
+      <p class="contact-intro">
+        Leave your details and we'll keep you first in line for the Smart Watch Pro.
+      </p>
+
+      <form class="contact-form" method="POST" action="/submit">
+        <div class="field">
+          <label for="name">Name</label>
+          <input type="text" id="name" name="name" placeholder="Your name" required />
+        </div>
+        <div class="field">
+          <label for="email">Email</label>
+          <input type="email" id="email" name="email" placeholder="you@example.com" required />
+        </div>
+        <div class="field">
+          <label for="message">Message</label>
+          <textarea id="message" name="message" rows="4" placeholder="Anything you'd like us to know"></textarea>
+        </div>
+        <label class="field-check">
+          <input type="checkbox" id="newsletter" name="newsletter" value="yes" />
+          <span>Keep me posted — subscribe me to the newsletter.</span>
+        </label>
+        <button type="submit" class="btn-buy">
+          <span>Submit</span>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+        </button>
+      </form>
+    </div>
+  </section>
+
+  <!-- ====================== MARQUEE ====================== -->
+  <div class="marquee" aria-hidden="true">
+    <div class="marquee-track">
+      <span class="fill">Precision</span><span class="star">✦</span>
+      <span>Titanium</span><span class="star">✦</span>
+      <span class="fill">Sapphire</span><span class="star">✦</span>
+      <span>Lume</span><span class="star">✦</span>
+      <span class="fill">Engineered</span><span class="star">✦</span>
+      <span class="fill">Precision</span><span class="star">✦</span>
+      <span>Titanium</span><span class="star">✦</span>
+      <span class="fill">Sapphire</span><span class="star">✦</span>
+      <span>Lume</span><span class="star">✦</span>
+      <span class="fill">Engineered</span><span class="star">✦</span>
+    </div>
+  </div>
+
+  <!-- ====================== FEATURES ====================== -->
+  <section class="section" id="features">
+    <div class="features-head">
+      <span class="section-label reveal">001 / Capabilities</span>
+      <h2 class="section-title reveal" data-delay="1">A laboratory<br /><em>on your wrist.</em></h2>
+    </div>
+
+    <!-- Feature 1 -->
+    <article class="feature">
+      <div class="feature-text">
+        <p class="feature-index reveal">F—01</p>
+        <div class="feature-icon reveal" data-delay="1">
+          <svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.5">
+            <rect x="12" y="6" width="24" height="36" rx="6"/><circle cx="24" cy="24" r="9"/><path d="M24 18v6l4 3"/>
+          </svg>
+        </div>
+        <h3 class="reveal" data-delay="2">A sapphire window.</h3>
+        <p class="reveal" data-delay="3">An always-on AMOLED display behind a single-crystal sapphire lens. 2,000 nits of peak brightness — legible under noon sun, dimmed to an ember at midnight.</p>
+      </div>
+      <div class="feature-media reveal from-right">
+        <span class="corner tl"></span><span class="corner tr"></span><span class="corner bl"></span><span class="corner br"></span>
+        <span class="glyph">◷</span>
+        <span class="tag">Display · AMOLED + Sapphire</span>
+      </div>
+    </article>
+
+    <!-- Feature 2 -->
+    <article class="feature">
+      <div class="feature-text">
+        <p class="feature-index reveal">F—02</p>
+        <div class="feature-icon reveal" data-delay="1">
+          <svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.5">
+            <path d="M6 24h8l4-12 8 24 4-12h8"/>
+          </svg>
+        </div>
+        <h3 class="reveal" data-delay="2">It knows your body.</h3>
+        <p class="reveal" data-delay="3">A stacked sensor array reads heart rate, blood oxygen, ECG and skin temperature in real time — medical-grade signals, quietly logged, entirely yours.</p>
+      </div>
+      <div class="feature-media reveal from-left">
+        <span class="corner tl"></span><span class="corner tr"></span><span class="corner bl"></span><span class="corner br"></span>
+        <span class="glyph">♥</span>
+        <span class="tag">Bio-sensing · 4-channel</span>
+      </div>
+    </article>
+
+    <!-- Feature 3 -->
+    <article class="feature">
+      <div class="feature-text">
+        <p class="feature-index reveal">F—03</p>
+        <div class="feature-icon reveal" data-delay="1">
+          <svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.5">
+            <rect x="8" y="16" width="28" height="16" rx="3"/><path d="M36 21h4v6h-4z"/><path d="M14 24h10"/>
+          </svg>
+        </div>
+        <h3 class="reveal" data-delay="2">Days, not hours.</h3>
+        <p class="reveal" data-delay="3">A high-density cell delivers up to two weeks on a charge, and a 12-minute fast charge returns a full day. Charge it less. Wear it more.</p>
+      </div>
+      <div class="feature-media reveal from-right">
+        <span class="corner tl"></span><span class="corner tr"></span><span class="corner bl"></span><span class="corner br"></span>
+        <span class="glyph">⌁</span>
+        <span class="tag">Power · 14-day cell</span>
+      </div>
+    </article>
+
+    <!-- Feature 4 -->
+    <article class="feature">
+      <div class="feature-text">
+        <p class="feature-index reveal">F—04</p>
+        <div class="feature-icon reveal" data-delay="1">
+          <svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.5">
+            <path d="M24 5l16 7v11c0 9-7 16-16 19C15 39 8 32 8 23V12z"/>
+          </svg>
+        </div>
+        <h3 class="reveal" data-delay="2">Aerospace titanium.</h3>
+        <p class="reveal" data-delay="3">A monobloc Grade-5 titanium case, sealed to 100 metres and designed to be opened — modular, serviceable, repairable. Built to be inherited, not replaced.</p>
+      </div>
+      <div class="feature-media reveal from-left">
+        <span class="corner tl"></span><span class="corner tr"></span><span class="corner bl"></span><span class="corner br"></span>
+        <span class="glyph">◇</span>
+        <span class="tag">Build · Grade-5 Ti · 100m</span>
+      </div>
+    </article>
+  </section>
+
+  <!-- ====================== STATS ====================== -->
+  <section class="section stats">
+    <div class="stats-grid">
+      <div class="stat reveal">
+        <span class="stat-number" data-value="2000" data-decimals="0">0</span><span class="stat-suffix">nits</span>
+        <div class="stat-label">Peak brightness</div>
+      </div>
+      <div class="stat reveal" data-delay="1">
+        <span class="stat-number" data-value="100" data-decimals="0">0</span><span class="stat-suffix">m</span>
+        <div class="stat-label">Water resistance</div>
+      </div>
+      <div class="stat reveal" data-delay="2">
+        <span class="stat-number" data-value="14" data-decimals="0">0</span><span class="stat-suffix">days</span>
+        <div class="stat-label">Battery life</div>
+      </div>
+      <div class="stat reveal" data-delay="3">
+        <span class="stat-number" data-value="0.01" data-decimals="2">0</span><span class="stat-suffix">mm</span>
+        <div class="stat-label">Assembly tolerance</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ====================== DISSECTION ====================== -->
+  <section class="dissect" id="dissection">
+    <div class="dissect-stage">
+      <div class="dissect-bg"></div>
+
+      <div class="dissect-head">
+        <span class="section-label">002 / Teardown</span>
+        <h2>Every layer, on purpose.</h2>
+      </div>
+
+      <canvas class="dissect-canvas" role="img" aria-label="Tester Smart Watch Pro dissection — scroll to disassemble"></canvas>
+
+      <!-- callouts revealed by scroll progress -->
+      <div class="callout right" style="top:30%; left:62%" data-at="0.10" data-out="0.55">
+        <span class="dot"></span><span class="line"></span><span class="txt"><span class="num">01</span>Sapphire crystal</span>
+      </div>
+      <div class="callout left" style="top:44%; left:38%" data-at="0.22" data-out="0.7">
+        <span class="dot"></span><span class="line"></span><span class="txt"><span class="num">02</span>AMOLED panel</span>
+      </div>
+      <div class="callout right" style="top:58%; left:60%" data-at="0.40" data-out="0.85">
+        <span class="dot"></span><span class="line"></span><span class="txt"><span class="num">03</span>Logic board</span>
+      </div>
+      <div class="callout left" style="top:66%; left:40%" data-at="0.55" data-out="0.95">
+        <span class="dot"></span><span class="line"></span><span class="txt"><span class="num">04</span>Battery cell</span>
+      </div>
+      <div class="callout right" style="top:50%; left:64%" data-at="0.72" data-out="1.0">
+        <span class="dot"></span><span class="line"></span><span class="txt"><span class="num">05</span>Titanium case</span>
+      </div>
+
+      <div class="dissect-hint">Scroll — disassembly in motion</div>
+    </div>
+  </section>
+
+  <!-- ====================== CTA ====================== -->
+  <section class="cta" id="buy">
+    <span class="section-label reveal" style="justify-content:center;">003 / Acquire</span>
+    <h2 class="reveal" data-delay="1">Own the <em>instrument.</em></h2>
+    <a class="btn-buy reveal" data-delay="2" href="product.html">
+      <span>Configure &amp; Buy</span>
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+    </a>
+    <p class="cta-note reveal" data-delay="3">Free shipping · 2-year warranty · 30-day returns</p>
+  </section>
+
+  <!-- ====================== TESTER TECH ====================== -->
+  <section class="section tech-promo" id="tech">
+    <div class="tech-promo-inner">
+      <div class="tech-promo-text">
+        <span class="section-label reveal">004 / Tester Tech</span>
+        <h2 class="section-title reveal" data-delay="1">More than a watch.<br /><em>A whole brand.</em></h2>
+        <p class="reveal" data-delay="2">
+          The Smart Watch Pro is one device in a much bigger family. Step into the full
+          Tester Tech store — phones, audio, wearables, laptops, cameras, gaming and
+          smart-home gear, every piece engineered to the same micron.
+        </p>
+        <a class="btn-buy reveal" data-delay="3" href="TesterTech.html">
+          <span>Explore Tester Tech</span>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+        </a>
+        <a class="btn-buy reveal" data-delay="3" href="Sights.html" style="margin-left: 0.75rem;">
+          <span>Open Landmark Study</span>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+        </a>
+      </div>
+      <div class="tech-promo-media reveal from-right">
+        <span class="corner tl"></span><span class="corner tr"></span><span class="corner bl"></span><span class="corner br"></span>
+        <span class="glyph">⌁</span>
+        <span class="tag">Store · Phones · Audio · Smart Home</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- ====================== FOOTER ====================== -->
+  <footer class="site-footer">
+    <div class="footer-inner">
+      <div class="footer-brand">Tester<span style="color:var(--gold)">.</span></div>
+      <div class="socials">
+        <a href="https://x.com/testertech" target="_blank" rel="noopener noreferrer" aria-label="X / Twitter"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M18.9 2H22l-7 8 8.2 12h-6.4l-5-7.3L6 22H2.9l7.5-8.6L2.5 2h6.6l4.5 6.6L18.9 2zm-1.1 18h1.7L7.3 3.8H5.5L17.8 20z"/></svg></a>
+        <a href="https://instagram.com/testertech" target="_blank" rel="noopener noreferrer" aria-label="Instagram"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/></svg></a>
+        <a href="https://youtube.com/@testertech" target="_blank" rel="noopener noreferrer" aria-label="YouTube"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="2.5" y="6" width="19" height="12" rx="4"/><path d="M10 9.2l5 2.8-5 2.8z" fill="currentColor" stroke="none"/></svg></a>
+        <a href="https://github.com/testertech" target="_blank" rel="noopener noreferrer" aria-label="GitHub"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2a10 10 0 00-3.16 19.49c.5.09.68-.22.68-.48v-1.7c-2.78.6-3.37-1.34-3.37-1.34-.45-1.16-1.11-1.47-1.11-1.47-.91-.62.07-.61.07-.61 1 .07 1.53 1.03 1.53 1.03.9 1.53 2.36 1.09 2.94.83.09-.65.35-1.09.63-1.34-2.22-.25-4.55-1.11-4.55-4.94 0-1.09.39-1.98 1.03-2.68-.1-.25-.45-1.27.1-2.65 0 0 .84-.27 2.75 1.02a9.5 9.5 0 015 0c1.91-1.29 2.75-1.02 2.75-1.02.55 1.38.2 2.4.1 2.65.64.7 1.03 1.59 1.03 2.68 0 3.84-2.34 4.69-4.57 4.94.36.31.68.92.68 1.85v2.74c0 .27.18.58.69.48A10 10 0 0012 2z"/></svg></a>
+      </div>
+      <div class="footer-fine">
+        <span>© 2026 Tester Laboratories — Smart Watch Pro</span>
+        <span>Engineered to the micron</span>
+      </div>
+    </div>
+  </footer>
+
+  <!-- minimal vanilla JS — no libraries -->
+  <script src="js/app.js"></script>
+  <script src="js/catalog.js"></script>
+  <script src="js/search.js"></script>
+</body>
+</html>

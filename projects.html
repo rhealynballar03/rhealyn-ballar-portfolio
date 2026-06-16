@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%232E2823'/%3E%3Crect x='11' y='11' width='10' height='10' fill='%23C4623D' transform='rotate(45 16 16)'/%3E%3C/svg%3E" />
+<title>Projects — Rhealyn Ballar</title>
+<meta name="description" content="Selected projects by Rhealyn Ballar — web builds, frontend concepts, and AI-powered automation." />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..700;1,9..144,400..600&family=Hanken+Grotesk:wght@300;400;500;600&display=swap" rel="stylesheet" />
+<style>
+  :root{
+    --bg:#FBF7F1;--surface:#EFE7DA;--surface-2:#F5EFE5;
+    --ink:#2E2823;--ink-soft:#6E635A;
+    --accent:#C4623D;--accent-deep:#A9502F;--accent-2:#E0913E;
+    --grad:linear-gradient(120deg,#C4623D 0%,#E0913E 100%);
+    --line:rgba(46,40,35,.12);
+    --shadow:0 26px 60px -34px rgba(46,40,35,.32);
+    --shadow-warm:0 26px 56px -30px rgba(196,98,61,.42);
+    --serif:"Fraunces",Georgia,serif;--sans:"Hanken Grotesk",system-ui,sans-serif;
+    --s-1:.5rem;--s-2:.875rem;--s-3:1.25rem;--s-4:2rem;--s-5:3rem;--s-6:4.5rem;--s-section:7rem;
+    --radius:12px;--maxw:1100px;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth}
+  body{font-family:var(--sans);color:var(--ink);line-height:1.65;-webkit-font-smoothing:antialiased;overflow-x:hidden;
+    background:
+      radial-gradient(1100px 760px at 8% -6%, rgba(196,98,61,.16), transparent 58%),
+      radial-gradient(950px 680px at 104% 4%, rgba(224,145,62,.17), transparent 55%),
+      radial-gradient(900px 720px at 50% 112%, rgba(196,98,61,.10), transparent 60%),
+      var(--bg);
+    background-attachment:fixed;}
+  body::before{content:"";position:fixed;inset:0;z-index:0;pointer-events:none;opacity:.045;
+    background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");}
+  .wrap{position:relative;z-index:1;max-width:var(--maxw);margin:0 auto;padding:0 28px}
+  .brandbar{position:fixed;top:0;left:0;right:0;height:4px;background:var(--grad);background-size:220% 100%;z-index:200;animation:shimmer 9s linear infinite}
+  @keyframes shimmer{to{background-position:220% 0}}
+  @media(prefers-reduced-motion:reduce){.brandbar,.rule{animation:none}}
+
+  nav{display:flex;justify-content:space-between;align-items:center;padding:var(--s-4) 0 var(--s-3)}
+  .brand{font-family:var(--serif);font-weight:600;font-size:1.3rem;letter-spacing:-.015em}
+  .nav-links{display:flex;gap:var(--s-5);font-size:.78rem;text-transform:uppercase;letter-spacing:.16em;font-weight:500}
+  .nav-links a{color:var(--ink-soft);text-decoration:none;transition:color .3s;position:relative;padding-bottom:4px}
+  .nav-links a:hover{color:var(--ink)}
+  .nav-links a.active{color:var(--ink)}
+  .nav-links a.active::after{content:"";position:absolute;left:0;bottom:-4px;width:100%;height:2px;background:var(--grad)}
+
+  .mark{width:9px;height:9px;background:var(--grad);transform:rotate(45deg);flex:none;display:inline-block;box-shadow:0 2px 8px -2px rgba(196,98,61,.5)}
+  .rule{display:block;width:56px;height:3px;background:var(--grad);background-size:220% 100%;border-radius:2px;margin-top:var(--s-3);animation:shimmer 7s linear infinite}
+
+  header.intro{padding:var(--s-6) 0 var(--s-5)}
+  .eyebrow{display:inline-flex;align-items:center;gap:11px;font-size:.74rem;text-transform:uppercase;letter-spacing:.3em;color:var(--ink-soft);font-weight:600;margin-bottom:var(--s-4)}
+  h1{font-family:var(--serif);font-weight:380;line-height:.96;font-size:clamp(2.8rem,7vw,5rem);letter-spacing:-.03em;
+     background:linear-gradient(108deg,var(--ink) 42%,var(--accent) 84%,var(--accent-2) 100%);-webkit-background-clip:text;background-clip:text;color:transparent}
+  .intro p{margin-top:var(--s-4);font-size:1.08rem;color:var(--ink-soft);max-width:56ch;font-weight:350}
+
+  .reel{position:relative;margin-bottom:var(--s-5);border-radius:var(--radius);overflow:hidden;box-shadow:var(--shadow-warm);background:#211c18;border:1px solid var(--line)}
+  .reel video{display:block;width:100%;height:auto}
+  .reel-tag{position:absolute;left:18px;top:16px;z-index:2;display:inline-flex;align-items:center;gap:8px;background:rgba(33,28,24,.55);backdrop-filter:blur(6px);color:#fff;font-size:.7rem;letter-spacing:.16em;text-transform:uppercase;padding:7px 13px;border-radius:999px}
+  .reel-tag i,.thumb .live i{width:7px;height:7px;border-radius:50%;background:var(--accent);display:inline-block;animation:pulse 1.8s infinite}
+  @keyframes pulse{0%,100%{opacity:1}50%{opacity:.3}}
+
+  .grid{display:grid;grid-template-columns:1fr 1fr;gap:var(--s-4);padding-bottom:var(--s-5)}
+  .tile{display:flex;flex-direction:column;background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);overflow:hidden;transition:transform .4s cubic-bezier(.2,.7,.2,1),box-shadow .4s}
+  .tile:hover{transform:translateY(-6px);box-shadow:var(--shadow-warm)}
+  .thumb{display:block;position:relative;aspect-ratio:16/10;overflow:hidden;background:#211c18}
+  .thumb img,.thumb video{width:100%;height:100%;object-fit:cover;object-position:top center;transition:transform .6s ease;display:block}
+  .tile:hover .thumb img,.tile:hover .thumb video{transform:scale(1.05)}
+  .thumb.placeholder{display:flex;align-items:center;justify-content:center;background:linear-gradient(135deg,#2E2823,#43362c)}
+  .thumb.placeholder span{font-family:var(--serif);font-style:italic;color:rgba(251,247,241,.82);font-size:1.05rem;padding:0 24px;text-align:center}
+  .thumb .live{position:absolute;right:10px;top:10px;z-index:2;display:inline-flex;align-items:center;gap:6px;background:rgba(33,28,24,.6);backdrop-filter:blur(6px);color:#fff;font-size:.58rem;letter-spacing:.12em;text-transform:uppercase;padding:5px 9px;border-radius:999px}
+  .tbody{position:relative;padding:var(--s-3) var(--s-3) var(--s-4)}
+  .tbody::before{content:"";position:absolute;left:var(--s-3);top:0;width:34px;height:2px;background:var(--grad);transform:scaleX(0);transform-origin:left;transition:transform .4s cubic-bezier(.2,.7,.2,1)}
+  .tile:hover .tbody::before{transform:scaleX(1)}
+  .kicker{font-size:.66rem;letter-spacing:.16em;text-transform:uppercase;color:var(--ink-soft);font-weight:600;margin-bottom:7px}
+  .tile h2{font-family:var(--serif);font-weight:500;font-size:1.32rem;letter-spacing:-.01em;line-height:1.1}
+  .tile p{color:var(--ink-soft);margin-top:9px;font-size:.9rem}
+  .tags{display:flex;flex-wrap:wrap;gap:7px;margin-top:var(--s-3)}
+  .tag{font-size:.7rem;letter-spacing:.03em;padding:5px 11px;border-radius:999px;border:1px solid var(--line);background:var(--surface-2);color:var(--ink)}
+  .tact{margin-top:var(--s-3);display:flex;align-items:center;gap:14px}
+  .view{font-size:.8rem;font-weight:600;letter-spacing:.04em;text-decoration:none;padding:10px 18px;border-radius:4px;background:var(--grad);color:#fff;transition:transform .2s,filter .2s}
+  .view:hover{filter:brightness(1.05);transform:translateY(-2px)}
+  .note{font-size:.74rem;color:var(--ink-soft)}
+
+  footer{border-top:1px solid var(--line);padding:var(--s-4) 0 var(--s-5);margin-top:var(--s-5);display:flex;justify-content:space-between;font-size:.8rem;color:var(--ink-soft);flex-wrap:wrap;gap:var(--s-2)}
+
+  .reveal{opacity:0;transform:translateY(30px);transition:opacity 1.05s cubic-bezier(.2,.7,.2,1),transform 1.05s cubic-bezier(.2,.7,.2,1)}
+  .reveal.in{opacity:1;transform:none}
+  @media(prefers-reduced-motion:reduce){.reveal{opacity:1;transform:none;transition:none}}
+
+  @media(max-width:780px){:root{--s-section:5rem}.nav-links{gap:var(--s-3)}}
+  @media(max-width:560px){.grid{grid-template-columns:1fr}.nav-links{display:none}}
+</style>
+</head>
+<body>
+<div class="brandbar"></div>
+<div class="wrap">
+
+  <nav>
+    <div class="brand">Rhealyn Ballar</div>
+    <div class="nav-links">
+      <a href="index.html">Home</a>
+      <a href="about.html">About</a>
+      <a href="projects.html" class="active">Projects</a>
+      <a href="about.html#contact">Contact</a>
+    </div>
+  </nav>
+
+  <header class="intro reveal">
+    <span class="eyebrow"><span class="mark"></span>Selected work</span>
+    <h1>Things I've built &amp; shipped.</h1>
+    <p>A mix of web builds, frontend concepts, and AI-powered automation — from a full e-commerce experience to a daily briefing that writes and sends itself.</p>
+  </header>
+
+  <section class="reveal" aria-label="Project showcase reel">
+    <div class="reel">
+      <span class="reel-tag"><i></i>Showreel</span>
+      <video autoplay muted loop playsinline preload="metadata" poster="assets/reel-poster.jpg">
+        <source src="assets/reel.mp4" type="video/mp4" />
+      </video>
+    </div>
+  </section>
+
+  <section class="grid">
+
+    <article class="tile reveal">
+      <a class="thumb" href="projects/smart-watch/index.html"><span class="live"><i></i>Live</span><video autoplay muted loop playsinline preload="none" poster="assets/shots/01-smart-watch.png"><source src="assets/previews/01-smart-watch.mp4" type="video/mp4" /></video></a>
+      <div class="tbody">
+        <div class="kicker">E-Commerce · Multi-page site</div>
+        <h2>Tester · Smart Watch Pro</h2>
+        <p>A full product-marketing and storefront experience — scroll-driven animation, video transitions, and a complete shopping flow.</p>
+        <div class="tags"><span class="tag">HTML / CSS / JS</span><span class="tag">Scroll animation</span><span class="tag">18+ pages</span></div>
+        <div class="tact"><a class="view" href="projects/smart-watch/index.html">View site</a><span class="note">Full multi-page build</span></div>
+      </div>
+    </article>
+
+    <article class="tile reveal">
+      <a class="thumb" href="projects/smart-watch/Sights.html"><span class="live"><i></i>Scroll anim</span><video autoplay muted loop playsinline preload="none" poster="assets/shots/02-sights.png"><source src="assets/previews/02-sights.mp4" type="video/mp4" /></video></a>
+      <div class="tbody">
+        <div class="kicker">Cinematic · Scroll experience</div>
+        <h2>Sights — The Eiffel Tower</h2>
+        <p>A dark, cinematic scroll study — Paris's iron lattice rising frame-by-frame from a blueprint of light into champagne gold.</p>
+        <div class="tags"><span class="tag">Scroll storytelling</span><span class="tag">Frame animation</span><span class="tag">Art direction</span></div>
+        <div class="tact"><a class="view" href="projects/smart-watch/Sights.html">View experience</a><span class="note">Best on desktop</span></div>
+      </div>
+    </article>
+
+    <article class="tile reveal">
+      <a class="thumb" href="projects/smart-watch/TesterTech.html"><span class="live"><i></i>Live</span><video autoplay muted loop playsinline preload="none" poster="assets/shots/03-tester-tech.png"><source src="assets/previews/03-tester-tech.mp4" type="video/mp4" /></video></a>
+      <div class="tbody">
+        <div class="kicker">Brand · Storefront</div>
+        <h2>Tester Tech</h2>
+        <p>A premium consumer-tech brand storefront — smartwatches, glasses, assistants and wearables, with a conversion-focused landing.</p>
+        <div class="tags"><span class="tag">Landing page</span><span class="tag">Brand design</span><span class="tag">Product grid</span></div>
+        <div class="tact"><a class="view" href="projects/smart-watch/TesterTech.html">View site</a><span class="note">Brand storefront</span></div>
+      </div>
+    </article>
+
+    <article class="tile reveal">
+      <a class="thumb" href="projects/smart-watch/anything.html"><span class="live"><i></i>Live</span><video autoplay muted loop playsinline preload="none" poster="assets/shots/06-motion-study.png"><source src="assets/previews/06-motion-study.mp4" type="video/mp4" /></video></a>
+      <div class="tbody">
+        <div class="kicker">Motion · Creative lab</div>
+        <h2>Motion Study 001</h2>
+        <p>A short AI-generated film from Tester Lab — titanium dissolving into liquid gold. A motion experiment in texture and cinematic transition.</p>
+        <div class="tags"><span class="tag">Motion design</span><span class="tag">AI video</span><span class="tag">Web playback</span></div>
+        <div class="tact"><a class="view" href="projects/smart-watch/anything.html">Watch study</a><span class="note">Video experience</span></div>
+      </div>
+    </article>
+
+    <article class="tile reveal">
+      <a class="thumb" href="projects/smart-watch/trend-finder.html"><span class="live"><i></i>Live</span><video autoplay muted loop playsinline preload="none" poster="assets/shots/04-trend-finder.png"><source src="assets/previews/04-trend-finder.mp4" type="video/mp4" /></video></a>
+      <div class="tbody">
+        <div class="kicker">Tool · Interactive feature</div>
+        <h2>Trend Finder</h2>
+        <p>Search any topic and surface the top trending items from across the web — each with its source and a direct link.</p>
+        <div class="tags"><span class="tag">JavaScript</span><span class="tag">API integration</span><span class="tag">Search UI</span></div>
+        <div class="tact"><a class="view" href="projects/smart-watch/trend-finder.html">Open tool</a><span class="note">Interactive search</span></div>
+      </div>
+    </article>
+
+    <article class="tile reveal">
+      <a class="thumb" href="projects/homepage-concept/Frontend.html"><img src="assets/shots/07-moodboard.png" alt="Moodboard — Homepage Concept Generator" loading="lazy" /></a>
+      <div class="tbody">
+        <div class="kicker">Frontend · Generative tool</div>
+        <h2>Moodboard — Homepage Concept Generator</h2>
+        <p>A browser-native tool that turns a few inputs into homepage concept ideas — generates concept cards via the kie.ai API and exports a downloadable HTML file.</p>
+        <div class="tags"><span class="tag">Vanilla JS</span><span class="tag">kie.ai API</span><span class="tag">HTML export</span></div>
+        <div class="tact"><a class="view" href="projects/homepage-concept/Frontend.html">Open app</a><span class="note">Needs a kie.ai key</span></div>
+      </div>
+    </article>
+
+    <article class="tile reveal">
+      <div class="thumb placeholder"><span>AI-generated daily sales briefing</span></div>
+      <div class="tbody">
+        <div class="kicker">AI Automation · Backend</div>
+        <h2>Morning Briefing</h2>
+        <p>An AI daily sales briefing — pulls leads from Supabase, has Groq rank them by priority, renders an email-safe template, and sends via Resend on a daily cron.</p>
+        <div class="tags"><span class="tag">Node.js</span><span class="tag">Groq AI</span><span class="tag">Supabase</span><span class="tag">Resend</span></div>
+        <div class="tact"><span class="note">Backend service — runs on a daily Vercel cron. Demo on request.</span></div>
+      </div>
+    </article>
+
+  </section>
+
+  <footer>
+    <span>© 2026 Rhealyn Ballar — Virtual Assistant &amp; Web Builder</span>
+    <span>Dipolog City, Philippines</span>
+  </footer>
+
+</div>
+<script>
+  const io=new IntersectionObserver((e)=>{e.forEach(x=>{if(x.isIntersecting){x.target.classList.add('in');io.unobserve(x.target);}});},{threshold:.12});
+  document.querySelectorAll('.reveal').forEach((el)=>io.observe(el));
+</script>
+</body>
+</html>

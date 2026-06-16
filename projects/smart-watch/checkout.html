@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Checkout — Tester Tech</title>
+  <meta name="description" content="Securely complete your Tester Tech order." />
+  <meta name="theme-color" content="#080705" />
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%23080705'/%3E%3Ccircle cx='16' cy='16' r='6' fill='%23d8b981'/%3E%3C/svg%3E" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,500;0,9..144,600;1,9..144,300;1,9..144,500&family=Familjen+Grotesk:wght@400;500;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="css/style.css" />
+  <link rel="stylesheet" href="css/page.css" />
+  <link rel="stylesheet" href="css/cart.css" />
+</head>
+<body>
+
+  <header class="tt-nav" id="top">
+    <div class="tt-nav__inner">
+      <a class="tt-logo" href="index.html" aria-label="Tester Tech — back to home">
+        <svg class="tt-logo__home" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 11.5 12 4l9 7.5"/><path d="M5 10v9a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-9"/></svg> TESTER<span class="t2">TECH</span>
+      </a>
+      <nav class="tt-links" aria-label="Primary">
+        <a class="tt-link" href="cart.html">Cart</a>
+        <a class="tt-link" href="TesterTech.html#featured">Products</a>
+        <a class="tt-link" href="trend-finder.html">Trend Finder</a>
+      </nav>
+      <a class="tt-cta" href="cart.html">Back to cart
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+      </a>
+    </div>
+  </header>
+
+  <main>
+    <section class="pg-section" style="padding-top:clamp(2rem,6vh,4rem);">
+      <div class="tt-wrap">
+        <div id="checkout-root"></div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="tt-footer">
+    <div class="tt-wrap">
+      <div class="tt-footer__bottom" style="margin-top:0;border-top:0;">
+        <span>© 2026 Tester Tech — A Tester Laboratories brand</span>
+        <div class="tt-footer__legal">
+          <a href="privacy.html">Privacy</a><a href="terms.html">Terms</a><a href="returns.html">Returns</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <script src="js/catalog.js"></script>
+  <script src="js/cart.js"></script>
+  <script src="js/search.js"></script>
+  <script>
+    (function () {
+      "use strict";
+      var TC = window.TesterCart;
+      var root = document.getElementById("checkout-root");
+      var SHIP_THRESHOLD = 75, SHIP_COST = 9, TAX_RATE = 0.08;
+
+      function orderNumber() {
+        var t = Date.now().toString(36).toUpperCase().slice(-6);
+        return "TT-" + t;
+      }
+
+      function summaryItems(items) {
+        return items.map(function (it) {
+          return '<div class="co-item"><span><b>' + it.name + '</b> <span class="q">×' + it.qty + "</span></span>" +
+            "<span>" + TC.money(it.price * it.qty) + "</span></div>";
+        }).join("");
+      }
+
+      function renderEmpty() {
+        document.title = "Checkout — Tester Tech";
+        root.innerHTML = '<div class="cart-empty">' +
+          '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3"><circle cx="9" cy="20" r="1.5"/><circle cx="18" cy="20" r="1.5"/><path d="M2 3h3l2.4 12.4a1.5 1.5 0 0 0 1.5 1.2h8.2a1.5 1.5 0 0 0 1.5-1.2L21 7H6"/></svg>' +
+          '<h2>Nothing to check out</h2><p>Your cart is empty — add a few things first.</p>' +
+          '<a class="tt-btn" href="TesterTech.html#featured">Shop the collection</a></div>';
+      }
+
+      function renderForm() {
+        var items = TC.get();
+        var sub = TC.subtotal();
+        var ship = sub >= SHIP_THRESHOLD ? 0 : SHIP_COST;
+        var tax = Math.round(sub * TAX_RATE * 100) / 100;
+        var total = sub + ship + tax;
+
+        root.innerHTML =
+          '<span class="tt-eyebrow">Checkout</span>' +
+          '<h1 class="pg-title" style="font-size:clamp(2rem,5vw,3rem);margin-bottom:2rem;">Almost <em>yours.</em></h1>' +
+          '<form id="coForm" class="co-grid" novalidate>' +
+            '<div class="co-form">' +
+              '<fieldset class="co-fieldset"><legend>Contact</legend>' +
+                '<div class="co-grid2">' +
+                  '<div class="co-field co-field--full"><label for="email">Email</label><input id="email" type="email" required placeholder="you@example.com" autocomplete="email" /></div>' +
+                  '<div class="co-field"><label for="fname">First name</label><input id="fname" required autocomplete="given-name" /></div>' +
+                  '<div class="co-field"><label for="lname">Last name</label><input id="lname" required autocomplete="family-name" /></div>' +
+                "</div></fieldset>" +
+              '<fieldset class="co-fieldset"><legend>Shipping address</legend>' +
+                '<div class="co-grid2">' +
+                  '<div class="co-field co-field--full"><label for="addr">Address</label><input id="addr" required autocomplete="street-address" placeholder="140 Micron Way" /></div>' +
+                  '<div class="co-field"><label for="city">City</label><input id="city" required autocomplete="address-level2" /></div>' +
+                  '<div class="co-field"><label for="zip">ZIP / Postcode</label><input id="zip" required autocomplete="postal-code" /></div>' +
+                  '<div class="co-field co-field--full"><label for="country">Country</label><select id="country" required><option value="">Select…</option><option>United States</option><option>Canada</option><option>United Kingdom</option><option>Germany</option><option>Australia</option><option>Other</option></select></div>' +
+                "</div></fieldset>" +
+              '<fieldset class="co-fieldset"><legend>Payment</legend>' +
+                '<div class="co-grid2">' +
+                  '<div class="co-field co-field--full"><label for="card">Card number</label><input id="card" required inputmode="numeric" placeholder="4242 4242 4242 4242" autocomplete="cc-number" /></div>' +
+                  '<div class="co-field"><label for="exp">Expiry</label><input id="exp" required placeholder="MM/YY" autocomplete="cc-exp" /></div>' +
+                  '<div class="co-field"><label for="cvc">CVC</label><input id="cvc" required inputmode="numeric" placeholder="123" autocomplete="cc-csc" /></div>' +
+                "</div>" +
+                '<div class="co-note"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="4" y="10" width="16" height="10" rx="2"/><path d="M8 10V7a4 4 0 0 1 8 0v3"/></svg> Demo checkout — no real payment is taken and no card data is stored.</div>' +
+              "</fieldset>" +
+            "</div>" +
+            '<aside class="co-summary"><h2>Order summary</h2>' +
+              '<div class="co-items">' + summaryItems(items) + "</div>" +
+              '<div class="sum-row"><span>Subtotal</span><span>' + TC.money(sub) + "</span></div>" +
+              '<div class="sum-row"><span>Shipping</span><span>' + (ship === 0 ? "Free" : TC.money(ship)) + "</span></div>" +
+              '<div class="sum-row"><span>Tax (est. 8%)</span><span>' + TC.money(tax) + "</span></div>" +
+              '<div class="sum-row sum-row--total"><span>Total</span><b>' + TC.money(total) + "</b></div>" +
+              '<button class="tt-btn tt-btn--block" type="submit" form="coForm" style="margin-top:1.4rem;">Pay ' + TC.money(total) + "</button>" +
+              '<a class="tt-btn tt-btn--ghost tt-btn--block" href="cart.html" style="margin-top:.6rem;">Edit cart</a>' +
+            "</aside>" +
+          "</form>";
+
+        document.getElementById("coForm").addEventListener("submit", function (e) {
+          e.preventDefault();
+          var form = e.target;
+          if (!form.checkReportValidity && !form.reportValidity) { /* very old */ }
+          if (form.reportValidity && !form.reportValidity()) return;
+          var fname = document.getElementById("fname").value || "there";
+          var email = document.getElementById("email").value;
+          renderDone(orderNumber(), fname, email, total);
+          TC.clear();
+        });
+      }
+
+      function renderDone(num, fname, email, total) {
+        document.title = "Order confirmed — Tester Tech";
+        window.scrollTo(0, 0);
+        root.innerHTML = '<div class="co-done">' +
+          '<div class="co-done__check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M5 13l4 4L19 7"/></svg></div>' +
+          "<h1>Thank you, " + fname + ". <em>Order confirmed.</em></h1>" +
+          "<p>We've emailed a receipt to <strong style='color:var(--ink)'>" + (email || "your inbox") + "</strong>.</p>" +
+          "<p>You paid <strong style='color:var(--ink)'>" + TC.money(total) + "</strong>. Your devices ship within 2 business days.</p>" +
+          '<div class="co-done__num">Order ' + num + "</div>" +
+          '<a class="tt-btn" href="TesterTech.html#featured">Continue shopping</a></div>';
+      }
+
+      if (!TC.get().length) renderEmpty();
+      else renderForm();
+    })();
+  </script>
+</body>
+</html>

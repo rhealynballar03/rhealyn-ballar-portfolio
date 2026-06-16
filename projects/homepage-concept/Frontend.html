@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FrontEnd</title>
+    <style>
+        body {
+            font-family: system-ui, -apple-system, sans-serif;
+            margin: 0;
+            padding: 0;
+            background: #f5f5f7;
+            color: #1d1d1f;
+        }
+        header {
+            background: #1d1d1f;
+            color: #ffffff;
+            padding: 24px 32px;
+        }
+        header h1 {
+            margin: 0;
+            font-size: 1.75rem;
+        }
+        main {
+            max-width: 600px;
+            margin: 40px auto;
+            padding: 0 24px;
+        }
+        .field {
+            margin-bottom: 20px;
+        }
+        label {
+            display: block;
+            margin-bottom: 6px;
+            font-weight: 600;
+        }
+        input {
+            width: 100%;
+            padding: 10px 12px;
+            font-size: 1rem;
+            border: 1px solid #c7c7cc;
+            border-radius: 8px;
+            box-sizing: border-box;
+        }
+        input:focus {
+            outline: none;
+            border-color: #0071e3;
+            box-shadow: 0 0 0 3px rgba(0, 113, 227, 0.2);
+        }
+        button {
+            width: 100%;
+            padding: 12px 16px;
+            font-size: 1rem;
+            font-weight: 600;
+            color: #ffffff;
+            background: #0071e3;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: background 0.15s ease;
+        }
+        button:hover {
+            background: #0060c0;
+        }
+        button:active {
+            background: #1d1d1f;
+        }
+        button:disabled {
+            background: #a9c9ef;
+            cursor: default;
+        }
+        .btn-secondary {
+            background: #ffffff;
+            color: #0071e3;
+            border: 1px solid #0071e3;
+        }
+        .btn-secondary:hover {
+            background: #f0f7ff;
+        }
+        .btn-secondary:active {
+            background: #e2efff;
+        }
+        .btn-secondary:disabled {
+            background: #ffffff;
+            color: #a9c9ef;
+            border-color: #a9c9ef;
+            cursor: default;
+        }
+        .form-error {
+            display: none;
+            margin-top: 12px;
+            padding: 10px 12px;
+            background: #fff0f0;
+            border: 1px solid #e0a0a0;
+            color: #a01515;
+            border-radius: 8px;
+            font-size: 0.9rem;
+        }
+
+        /* ---- Results ---- */
+        .results {
+            max-width: 1100px;
+            margin: 0 auto 60px;
+            padding: 0 24px;
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 24px;
+        }
+        @media (max-width: 760px) {
+            .results { grid-template-columns: 1fr; }
+        }
+        .concept {
+            background: #ffffff;
+            border: 1px solid #e2e2e7;
+            border-radius: 14px;
+            padding: 20px;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.06);
+        }
+        .concept-head {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            margin-bottom: 8px;
+        }
+        .concept-number {
+            flex: 0 0 auto;
+            width: 36px;
+            height: 36px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: #1d1d1f;
+            color: #fff;
+            border-radius: 50%;
+            font-weight: 700;
+        }
+        .concept-category {
+            display: inline-block;
+            font-size: 0.72rem;
+            font-weight: 700;
+            letter-spacing: 0.06em;
+            text-transform: uppercase;
+            color: #0071e3;
+        }
+        .concept-name {
+            margin: 2px 0 0;
+            font-size: 1.2rem;
+        }
+        .concept-desc {
+            margin: 0 0 16px;
+            color: #555;
+            font-size: 0.92rem;
+            line-height: 1.4;
+        }
+        .concept-images {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+        }
+        @media (max-width: 480px) {
+            .concept-images { grid-template-columns: 1fr; }
+        }
+        .img-slot {
+            display: flex;
+            flex-direction: column;
+        }
+        .img-caption {
+            font-size: 0.75rem;
+            font-weight: 600;
+            color: #6e6e73;
+            margin-bottom: 6px;
+        }
+        .img-slot img {
+            width: 100%;
+            border-radius: 8px;
+            display: block;
+            border: 1px solid #e2e2e7;
+        }
+        .img-link {
+            font-size: 0.75rem;
+            color: #0071e3;
+            text-decoration: none;
+            margin-top: 4px;
+        }
+        .img-link:hover { text-decoration: underline; }
+        .img-placeholder, .img-error {
+            aspect-ratio: 16 / 9;
+            border-radius: 8px;
+            border: 1px dashed #c7c7cc;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            background: #fafafa;
+            color: #6e6e73;
+            font-size: 0.85rem;
+            text-align: center;
+            padding: 8px;
+        }
+        .img-error {
+            border-color: #e0a0a0;
+            background: #fff7f7;
+            color: #a01515;
+        }
+        .spinner {
+            width: 26px;
+            height: 26px;
+            border: 3px solid #d2d2d7;
+            border-top-color: #0071e3;
+            border-radius: 50%;
+            animation: spin 0.8s linear infinite;
+        }
+        @keyframes spin { to { transform: rotate(360deg); } }
+        .retry-btn {
+            width: auto;
+            padding: 6px 14px;
+            font-size: 0.8rem;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>FrontEnd</h1>
+    </header>
+
+    <main>
+        <form>
+            <div class="field">
+                <label for="idea">Idea</label>
+                <input type="text" id="idea" name="idea" placeholder="Enter your idea">
+            </div>
+
+            <div class="field">
+                <label for="theme">Theme</label>
+                <input type="text" id="theme" name="theme" placeholder="Enter a theme">
+            </div>
+
+            <div class="field">
+                <label for="products">Products</label>
+                <input type="text" id="products" name="products" placeholder="Enter products">
+            </div>
+
+            <div class="field">
+                <button type="button" id="generateBtn">Generate Now</button>
+            </div>
+
+            <div class="field">
+                <button type="button" id="downloadBtn" class="btn-secondary">Download .html</button>
+            </div>
+
+            <div id="formError" class="form-error"></div>
+        </form>
+    </main>
+
+    <section id="results" class="results"></section>
+
+    <script src="config.js"></script>
+    <script src="app.js"></script>
+</body>
+</html>

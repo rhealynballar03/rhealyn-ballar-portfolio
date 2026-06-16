@@ -1,0 +1,12 @@
+# dependencies & tooling artifacts
+node_modules/
+**/node_modules/
+.tooling/node_modules/
+
+# vercel
+.vercel/
+
+# os / logs
+*.log
+.DS_Store
+Thumbs.db

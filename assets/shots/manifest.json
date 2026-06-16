@@ -1,0 +1,66 @@
+[
+  {
+    "slug": "01-smart-watch",
+    "url": "/projects/smart-watch/index.html",
+    "label": "Tester · Smart Watch Pro",
+    "text": 2135,
+    "imgs": 0,
+    "h": 11332,
+    "bytes": 1019672
+  },
+  {
+    "slug": "02-sights",
+    "url": "/projects/smart-watch/Sights.html",
+    "label": "Sights — The Eiffel Tower",
+    "scroll": 0.35,
+    "text": 1470,
+    "imgs": 0,
+    "h": 5271,
+    "bytes": 401677
+  },
+  {
+    "slug": "03-tester-tech",
+    "url": "/projects/smart-watch/TesterTech.html",
+    "label": "Tester Tech",
+    "text": 9039,
+    "imgs": 28,
+    "h": 11178,
+    "bytes": 2419302
+  },
+  {
+    "slug": "04-trend-finder",
+    "url": "/projects/smart-watch/trend-finder.html",
+    "label": "Trend Finder",
+    "text": 1111,
+    "imgs": 0,
+    "h": 1505,
+    "bytes": 338840
+  },
+  {
+    "slug": "05-dashboard",
+    "url": "/projects/smart-watch/dashboard.html",
+    "label": "Submissions Dashboard",
+    "text": 61,
+    "imgs": 0,
+    "h": 458,
+    "bytes": 162525
+  },
+  {
+    "slug": "06-motion-study",
+    "url": "/projects/smart-watch/anything.html",
+    "label": "Motion Study 001",
+    "text": 387,
+    "imgs": 0,
+    "h": 900,
+    "bytes": 3531224
+  },
+  {
+    "slug": "07-moodboard",
+    "url": "/projects/homepage-concept/Frontend.html",
+    "label": "Moodboard — Homepage Concept Generator",
+    "text": 56,
+    "imgs": 0,
+    "h": 532,
+    "bytes": 33205
+  }
+]

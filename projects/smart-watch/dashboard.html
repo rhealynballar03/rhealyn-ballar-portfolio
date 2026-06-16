@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Submissions · Tester Smart Watch Pro</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,500&family=Familjen+Grotesk:wght@400;500;600&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="css/style.css" />
+  <style>
+    .dash { max-width: 1100px; margin: 0 auto; padding: clamp(2.5rem, 6vw, 5rem) 1.5rem; }
+    .dash-label { font-family: var(--font-mono); font-size: .78rem; letter-spacing: .22em; text-transform: uppercase; color: var(--gold); margin-bottom: .8rem; }
+    .dash h1 { font-family: var(--font-display); font-weight: 300; font-size: clamp(2rem, 5vw, 3.2rem); color: var(--ink); margin-bottom: 2rem; }
+    .dash h1 em { color: var(--gold); font-style: italic; }
+    .gate { display: flex; gap: .8rem; flex-wrap: wrap; max-width: 460px; }
+    .gate input { flex: 1 1 240px; font-family: var(--font-body); font-size: 1rem; color: var(--ink); background: var(--bg-2); border: 1px solid var(--line); border-radius: 3px; padding: .95rem 1.1rem; }
+    .gate input:focus { outline: none; border-color: var(--gold); }
+    .btn { font-family: var(--font-mono); font-size: .78rem; letter-spacing: .16em; text-transform: uppercase; color: var(--gold); background: transparent; border: 1px solid var(--gold); border-radius: 3px; padding: .95rem 1.6rem; cursor: pointer; transition: background .3s, color .3s; }
+    .btn:hover { background: var(--gold); color: var(--bg); }
+    .msg { font-family: var(--font-mono); font-size: .8rem; margin-top: 1rem; min-height: 1.2rem; }
+    .msg.error { color: #e2776a; }
+    .msg.ok { color: var(--gold); }
+    .stats { font-family: var(--font-mono); font-size: .8rem; color: var(--ink-dim); margin: 1.6rem 0 1rem; }
+    table { width: 100%; border-collapse: collapse; font-family: var(--font-body); font-size: .9rem; }
+    th, td { text-align: left; padding: .8rem .9rem; border-bottom: 1px solid var(--line-soft); vertical-align: top; }
+    th { font-family: var(--font-mono); font-size: .68rem; letter-spacing: .12em; text-transform: uppercase; color: var(--muted); }
+    td { color: var(--ink-dim); }
+    td .name { color: var(--ink); }
+    .pill { font-family: var(--font-mono); font-size: .64rem; letter-spacing: .08em; text-transform: uppercase; padding: .2rem .55rem; border-radius: 999px; border: 1px solid var(--line); }
+    .pill.replied { color: var(--gold); border-color: var(--gold); }
+    .pill.pending { color: var(--muted); }
+    .yes { color: var(--gold); } .no { color: var(--muted); }
+    .hidden { display: none; }
+  </style>
+</head>
+<body>
+  <div class="dash">
+    <p class="dash-label">Tester Laboratories — Admin</p>
+    <h1>Form <em>Submissions</em></h1>
+
+    <div id="gate">
+      <div class="gate">
+        <input type="password" id="password" placeholder="Dashboard password" autocomplete="off" />
+        <button class="btn" id="access">Access Dashboard</button>
+      </div>
+      <p class="msg" id="msg"></p>
+    </div>
+
+    <div id="results" class="hidden">
+      <p class="stats" id="stats"></p>
+      <table>
+        <thead>
+          <tr><th>Name</th><th>Email</th><th>Message</th><th>Reply</th><th>Newsletter</th><th>Stage</th><th>Submitted</th></tr>
+        </thead>
+        <tbody id="rows"></tbody>
+      </table>
+    </div>
+  </div>
+
+  <script>
+    const $ = (id) => document.getElementById(id);
+    const esc = (s) => String(s == null ? "" : s).replace(/[&<>"]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
+
+    async function access() {
+      const password = $("password").value;
+      const msg = $("msg");
+      msg.className = "msg";
+      msg.textContent = "Checking…";
+      try {
+        const res = await fetch("/api/submissions", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ password }),
+        });
+        const data = await res.json();
+        if (!res.ok) { msg.className = "msg error"; msg.textContent = data.error || "Access denied."; return; }
+        render(data);
+      } catch (e) {
+        msg.className = "msg error";
+        msg.textContent = "Could not reach the server. Is it running?";
+      }
+    }
+
+    function render(data) {
+      $("gate").classList.add("hidden");
+      $("results").classList.remove("hidden");
+      const replied = data.submissions.filter((s) => s.reply_status === "replied").length;
+      const subs = data.submissions.filter((s) => s.newsletter_subscribed).length;
+      $("stats").textContent = `${data.count} submissions · ${replied} replied · ${subs} subscribed`;
+      $("rows").innerHTML = data.submissions.map((s) => `
+        <tr>
+          <td class="name">${esc(s.name)}</td>
+          <td>${esc(s.email)}</td>
+          <td>${esc(s.message)}</td>
+          <td><span class="pill ${s.reply_status === "replied" ? "replied" : "pending"}">${esc(s.reply_status || "pending")}</span></td>
+          <td class="${s.newsletter_subscribed ? "yes" : "no"}">${s.newsletter_subscribed ? "Yes" : "—"}</td>
+          <td>${esc(s.followup_stage ?? 0)}</td>
+          <td>${esc((s.created_at || "").slice(0, 10))}</td>
+        </tr>`).join("");
+    }
+
+    $("access").addEventListener("click", access);
+    $("password").addEventListener("keydown", (e) => { if (e.key === "Enter") access(); });
+  </script>
+</body>
+</html>

@@ -1,0 +1,533 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Tester · Sights — The Eiffel Tower</title>
+  <meta name="description" content="Sights — a dark, cinematic scroll study of the Eiffel Tower. Scroll, and Paris's iron lattice rises from a blueprint of light into champagne gold and obsidian. A Tester Atlas field study." />
+
+  <!-- Fonts: Fraunces (display serif) · Space Mono (technical) · Familjen Grotesk (body) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,500;0,9..144,600;1,9..144,300;1,9..144,500&family=Familjen+Grotesk:wght@400;500;600&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet" />
+
+  <!-- Shared premium visual language -->
+  <link rel="stylesheet" href="css/style.css" />
+
+  <!-- Page-specific styles for the scroll-driven frame animation -->
+  <style>
+    /* ---------- Hero (videoless, pure black + brand glow) ---------- */
+    .sights-hero { align-items: center; text-align: left; }
+    .sights-hero .hero-inner { padding-top: clamp(5rem, 12vh, 8rem); }
+    .sights-hero .hero-heading { margin-bottom: 2.2rem; }
+    .sights-hero .hero-foot { align-items: flex-end; }
+
+    .hero-aside {
+      font-family: var(--font-mono);
+      font-size: 0.66rem;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--muted);
+      opacity: 0;
+      transform: translateY(20px);
+      animation: fadeUp 1s var(--ease) 1.3s forwards;
+      text-align: right;
+      line-height: 2;
+    }
+    .hero-aside span { color: var(--gold); }
+
+    /* ---------- back link ---------- */
+    .back-link {
+      font-family: var(--font-mono);
+      font-size: 0.7rem;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--ink-dim);
+      display: inline-flex;
+      align-items: center;
+      gap: 0.6rem;
+      transition: color 0.3s, gap 0.3s var(--ease);
+    }
+    .back-link svg { width: 14px; height: 14px; }
+    .back-link:hover { color: var(--gold); gap: 0.9rem; }
+
+    /* ---------- intro ---------- */
+    .intro { padding-bottom: clamp(3rem, 8vh, 6rem); }
+    .intro-grid {
+      display: grid;
+      grid-template-columns: 0.9fr 1.1fr;
+      gap: clamp(2rem, 6vw, 6rem);
+      align-items: start;
+    }
+    .intro-grid p { color: var(--ink-dim); font-size: clamp(1.05rem, 1.6vw, 1.35rem); max-width: 46ch; }
+    .intro-grid p + p { margin-top: 1.4rem; }
+    .intro-grid .lead {
+      font-family: var(--font-display);
+      font-style: italic;
+      font-weight: 300;
+      color: var(--ink);
+      font-size: clamp(1.4rem, 2.4vw, 2rem);
+      line-height: 1.3;
+      max-width: 18ch;
+    }
+
+    /* ============================================================
+       STUDY — pinned canvas, scroll-scrubbed frame sequence
+       ============================================================ */
+    .study-runway {
+      position: relative;
+      z-index: 1;
+      height: 300vh;             /* scroll runway: shorter = the tower rises at a natural scroll pace */
+    }
+    .study-stage {
+      position: sticky;
+      top: 0;
+      height: 100svh;
+      overflow: hidden;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .study-bg {
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(55% 60% at 50% 48%, rgba(216,185,129,0.07), #000 72%);
+      pointer-events: none;
+    }
+    .study-canvas {
+      position: relative;
+      display: block;
+      width: min(86vmin, 760px);
+      aspect-ratio: 1 / 1;
+      background: #000;
+      will-change: transform;
+      /* feather the edges so the frames melt into the black stage */
+      -webkit-mask-image: radial-gradient(ellipse 68% 74% at 50% 50%, #000 48%, transparent 100%);
+      mask-image: radial-gradient(ellipse 68% 74% at 50% 50%, #000 48%, transparent 100%);
+    }
+    /* static fallback (reduced motion / no-JS) */
+    .study-fallback {
+      display: none;
+      width: min(86vmin, 760px);
+      aspect-ratio: 1 / 1;
+      object-fit: contain;
+      margin: 0 auto;
+      -webkit-mask-image: radial-gradient(ellipse 70% 76% at 50% 50%, #000 50%, transparent 100%);
+      mask-image: radial-gradient(ellipse 70% 76% at 50% 50%, #000 50%, transparent 100%);
+    }
+
+    .study-head {
+      position: absolute;
+      top: clamp(4.5rem, 11vh, 7rem);
+      left: 50%;
+      transform: translateX(-50%);
+      text-align: center;
+      z-index: 5;
+      width: 90%;
+    }
+    .study-head .section-label { justify-content: center; margin-bottom: 1rem; }
+    .study-head h2 {
+      font-family: var(--font-display);
+      font-weight: 500;
+      font-size: clamp(1.6rem, 3.6vw, 2.8rem);
+      letter-spacing: -0.02em;
+    }
+
+    /* phase caption — crossfades, tied to scroll ranges */
+    .study-phase {
+      position: absolute;
+      left: clamp(1.2rem, 4vw, 3rem);
+      bottom: clamp(2.4rem, 9vh, 5rem);
+      z-index: 5;
+      max-width: 24ch;
+      opacity: 0;
+      transform: translateY(18px);
+      filter: blur(7px);
+      transition: opacity 0.7s var(--ease), transform 0.9s var(--ease), filter 0.7s var(--ease);
+      will-change: opacity, transform, filter;
+      pointer-events: none;
+    }
+    .study-phase.show { opacity: 1; transform: none; filter: blur(0); }
+    .study-phase .k {
+      font-family: var(--font-mono);
+      font-size: 0.66rem;
+      letter-spacing: 0.24em;
+      text-transform: uppercase;
+      color: var(--gold);
+      display: inline-flex;
+      align-items: center;
+      gap: 0.7rem;
+    }
+    .study-phase .k::before { content: ""; width: 28px; height: 1px; background: var(--gold); }
+    .study-phase p {
+      margin-top: 0.8rem;
+      font-family: var(--font-display);
+      font-style: italic;
+      font-weight: 300;
+      font-size: clamp(1.1rem, 2vw, 1.55rem);
+      line-height: 1.28;
+      color: var(--ink);
+    }
+
+    /* technical readout */
+    .study-meter {
+      position: absolute;
+      right: clamp(1.2rem, 4vw, 3rem);
+      bottom: clamp(2.4rem, 9vh, 5rem);
+      z-index: 5;
+      font-family: var(--font-mono);
+      font-size: 0.66rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--muted);
+      text-align: right;
+      line-height: 1.9;
+    }
+    .study-meter b { color: var(--ink); font-weight: 400; }
+
+    .study-hint {
+      position: absolute;
+      bottom: clamp(1.2rem, 4vh, 2.2rem);
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 5;
+      font-family: var(--font-mono);
+      font-size: 0.62rem;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--muted);
+      transition: opacity 0.5s var(--ease);
+    }
+
+    /* frame-preload overlay (sits only over the stage) */
+    .study-loading {
+      position: absolute;
+      inset: 0;
+      z-index: 6;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 1.1rem;
+      background: rgba(0,0,0,0.45);
+      -webkit-backdrop-filter: blur(2px);
+      backdrop-filter: blur(2px);
+      transition: opacity 0.6s var(--ease), visibility 0.6s;
+    }
+    .study-loading.done { opacity: 0; visibility: hidden; }
+    .study-loading .lab {
+      font-family: var(--font-mono);
+      font-size: 0.64rem;
+      letter-spacing: 0.28em;
+      text-transform: uppercase;
+      color: var(--gold);
+    }
+    .study-loading .bar { width: 180px; height: 1px; background: var(--line); position: relative; overflow: hidden; }
+    .study-loading .bar i { position: absolute; inset: 0; width: 0%; background: var(--gold); transition: width 0.3s linear; }
+    .study-loading .lpct { font-family: var(--font-mono); font-size: 0.64rem; color: var(--muted); }
+
+    /* ---------- responsive ---------- */
+    @media (max-width: 880px) {
+      .sights-hero { align-items: flex-end; }
+      .hero-aside { text-align: left; }
+      .intro-grid { grid-template-columns: 1fr; gap: 1.8rem; }
+      /* size to the smaller of width AND height so the tower never clips in landscape */
+      .study-canvas, .study-fallback { width: min(92vw, 82svh, 520px); }
+      .study-phase { max-width: min(62vw, 34ch); bottom: clamp(4.5rem, 15vh, 7rem); }
+      .study-meter { display: none; }
+      /* comfortable tap targets on touch screens */
+      .site-header .nav-cta { padding-top: 0.85rem; padding-bottom: 0.85rem; }
+      .back-link { padding: 0.5rem 0; }
+    }
+    @media (max-width: 480px) { .study-runway { height: 240vh; } }
+
+    /* ---------- reduced motion ---------- */
+    /* The scrub is scroll-controlled (the user drives every frame), so it stays — we only
+       drop the gratuitous caption blur/slide and the push-in zoom (zoom handled in JS). */
+    @media (prefers-reduced-motion: reduce) {
+      .study-phase { filter: none; transition: opacity 0.4s var(--ease); }
+      .study-phase, .study-phase.show { transform: none; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- progress hairline (driven by shared app.js) -->
+  <div id="progress"></div>
+
+  <!-- ====================== HEADER ====================== -->
+  <header class="site-header">
+    <a href="index.html#top" class="logo"><span class="dot"></span> TESTER</a>
+    <nav class="nav-links">
+      <a class="nav-link" href="index.html#features">Watch</a>
+      <a class="nav-link" href="TesterTech.html">Tester Tech</a>
+      <a class="nav-link" href="index.html#dissection">Dissection</a>
+      <a class="nav-link" href="trend-finder.html">Trend Finder</a>
+      <a class="nav-cta" href="index.html#top">
+        Home
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+      </a>
+    </nav>
+  </header>
+
+  <!-- ====================== HERO ====================== -->
+  <section class="hero sights-hero" id="top">
+    <div class="hero-veil"></div>
+
+    <div class="hero-inner">
+      <p class="hero-label">Tester Atlas — The Eiffel Tower · Paris</p>
+      <h1 class="hero-heading">
+        <span class="word"><span>Forged</span></span>
+        <span class="word"><span>in</span></span>
+        <span class="word"><span><em>Gold.</em></span></span>
+      </h1>
+      <div class="hero-foot">
+        <p class="hero-tagline">Scroll, and Paris's iron lattice rises from a blueprint of pure light into champagne gold and obsidian.</p>
+        <p class="hero-aside">
+          Built <span>1889</span><br />
+          Field Study No. <span>003</span><br />
+          Engineered to the micron
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ====================== MARQUEE ====================== -->
+  <div class="marquee" aria-hidden="true">
+    <div class="marquee-track">
+      <span class="fill">Eiffel</span><span class="star">✦</span>
+      <span>Paris</span><span class="star">✦</span>
+      <span class="fill">Lattice</span><span class="star">✦</span>
+      <span>1889</span><span class="star">✦</span>
+      <span class="fill">Gold</span><span class="star">✦</span>
+      <span class="fill">Eiffel</span><span class="star">✦</span>
+      <span>Paris</span><span class="star">✦</span>
+      <span class="fill">Lattice</span><span class="star">✦</span>
+      <span>1889</span><span class="star">✦</span>
+      <span class="fill">Gold</span><span class="star">✦</span>
+    </div>
+  </div>
+
+  <!-- ====================== INTRO ====================== -->
+  <section class="section intro">
+    <div class="intro-grid">
+      <p class="lead reveal">One tower. Eighteen thousand iron parts. One scroll.</p>
+      <div class="reveal" data-delay="1">
+        <p>This is not a photo — it is a build. As you scroll, a rendered frame sequence plays on a canvas: a draughtsman's elevation traced in light gains weight, base to tip, until it stands as the finished tower — Gustave Eiffel's lattice recast in champagne gold and black obsidian.</p>
+        <p>It is the same scroll-scrubbed technique behind the Smart Watch Pro teardown, turned to architecture — every frame pre-loaded, the tower bound precisely to your scroll, so you set the pace of a wonder that took two years to raise.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ====================== STUDY — scroll-driven frame animation ====================== -->
+  <section class="study-runway" id="eiffel" aria-label="Scroll-driven transformation of the Eiffel Tower from blueprint to finished tower in champagne gold and obsidian">
+    <div class="study-stage">
+      <div class="study-bg"></div>
+
+      <div class="study-head">
+        <span class="section-label">003 / Paris · 1887 — 1889</span>
+        <h2>From line to gold.</h2>
+      </div>
+
+      <!-- the scrubbed canvas -->
+      <canvas class="study-canvas" role="img"
+              aria-label="The Eiffel Tower building itself from an architectural blueprint into a finished tower of champagne gold and obsidian as you scroll"></canvas>
+
+      <!-- static fallback for no-JS readers only -->
+      <noscript>
+        <img class="study-fallback" style="display:block" src="eiffel/eiffel-end.png"
+             alt="The Eiffel Tower fully realised in polished champagne gold and black obsidian, glowing against a deep black void." />
+      </noscript>
+
+      <!-- phase captions (crossfade across scroll ranges) -->
+      <div class="study-phase" data-start="0.00" data-end="0.32">
+        <span class="k">Phase 01 · Blueprint</span>
+        <p>An elevation in light — eighteen thousand parts, drawn before a single rivet is set.</p>
+      </div>
+      <div class="study-phase" data-start="0.34" data-end="0.68">
+        <span class="k">Phase 02 · Rising</span>
+        <p>Line gains weight. The lattice climbs, leg by iron leg.</p>
+      </div>
+      <div class="study-phase" data-start="0.70" data-end="1.00">
+        <span class="k">Phase 03 · In gold</span>
+        <p>La Tour Eiffel, recast in champagne gold and obsidian.</p>
+      </div>
+
+      <!-- technical readout -->
+      <div class="study-meter" aria-hidden="true">
+        Frame <b class="mframe">001</b> / 121<br />
+        <b class="mpct">0%</b> forged
+      </div>
+
+      <!-- frame-preload overlay -->
+      <div class="study-loading" aria-hidden="true">
+        <span class="lab">Forging the tower</span>
+        <div class="bar"><i></i></div>
+        <span class="lpct">0%</span>
+      </div>
+
+      <div class="study-hint">Scroll — the tower rises in gold</div>
+    </div>
+  </section>
+
+  <!-- ====================== CTA / BACK ====================== -->
+  <section class="cta" id="end">
+    <span class="section-label reveal" style="justify-content:center;">004 / Return</span>
+    <h2 class="reveal" data-delay="1">Back to the <em>instrument.</em></h2>
+    <a class="btn-buy reveal" data-delay="2" href="index.html#top">
+      <span>Return Home</span>
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+    </a>
+    <p class="cta-note reveal" data-delay="3">Tester Atlas · Field Study No. 003 · 121 frames, drawn to gold</p>
+  </section>
+
+  <!-- ====================== FOOTER ====================== -->
+  <footer class="site-footer">
+    <div class="footer-inner">
+      <div class="footer-brand">Tester<span style="color:var(--gold)">.</span></div>
+      <a class="back-link" href="index.html#top">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 12H5M11 6l-6 6 6 6"/></svg>
+        Back to home
+      </a>
+      <div class="footer-fine">
+        <span>© 2026 Tester Laboratories — Atlas Sights</span>
+        <span>Engineered to the micron</span>
+      </div>
+    </div>
+  </footer>
+
+  <!-- shared site behaviours: reveals, header state, top progress bar -->
+  <script src="js/app.js"></script>
+
+  <!-- page-specific: scroll-driven frame animation on canvas -->
+  <script>
+    (function () {
+      "use strict";
+
+      var reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+      var runway = document.querySelector(".study-runway");
+      var canvas = document.querySelector(".study-canvas");
+      if (!runway || !canvas) return;
+      // The scrub is scroll-driven (user-controlled), so it runs even under reduced motion;
+      // in that case we only drop the gratuitous push-in zoom (see onScroll).
+
+      var ctx = canvas.getContext("2d");
+      var loading = runway.querySelector(".study-loading");
+      var loadBar = runway.querySelector(".study-loading .bar i");
+      var loadPct = runway.querySelector(".study-loading .lpct");
+      var mFrame  = runway.querySelector(".study-meter .mframe");
+      var mPct    = runway.querySelector(".study-meter .mpct");
+      var hint    = runway.querySelector(".study-hint");
+      var phases  = Array.prototype.slice.call(runway.querySelectorAll(".study-phase"));
+
+      var FRAME_COUNT = 121;
+      var FRAME_SPEED = 1.12;     // >1 finishes the build slightly early so the gold tower holds at the bottom
+      var IMAGE_SCALE = 0.98;     // tiny inset; the radial mask feathers the rest into black
+      var V = "3";                // frame cache-buster — bump whenever the eiffel/ frames are regenerated
+      var frames = new Array(FRAME_COUNT);
+      var loaded = 0;
+      var currentFrame = 0;       // frame index bound directly to scroll position (1:1, no lag)
+      var drawnIndex = -1;        // last index actually painted
+
+      function framePath(i) {
+        return "eiffel/eiffel_" + String(i + 1).padStart(4, "0") + ".webp?v=" + V;
+      }
+
+      // ---- rendering (GPU blit; only ever called from the rAF loop / resize) ----
+      function draw(index) {
+        var img = frames[index];
+        if (!img) {                       // frame not loaded yet → fall back to nearest earlier frame
+          for (var k = index; k >= 0; k--) { if (frames[k]) { img = frames[k]; break; } }
+          if (!img) return;
+        }
+        var cw = canvas.width, ch = canvas.height;
+        var iw = img.naturalWidth, ih = img.naturalHeight;
+        var scale = Math.max(cw / iw, ch / ih) * IMAGE_SCALE;
+        var dw = iw * scale, dh = ih * scale;
+        var dx = (cw - dw) / 2, dy = (ch - dh) / 2;
+        ctx.fillStyle = "#000";
+        ctx.fillRect(0, 0, cw, ch);
+        ctx.drawImage(img, dx, dy, dw, dh);
+      }
+
+      function resize() {
+        var dpr = Math.min(window.devicePixelRatio || 1, 2);
+        var rect = canvas.getBoundingClientRect();
+        if (!rect.width) return;
+        canvas.width = Math.round(rect.width * dpr);
+        canvas.height = Math.round(rect.height * dpr);
+        drawnIndex = -1;
+        draw(currentFrame);
+      }
+
+      // ---- scroll handler: ONLY computes state, never draws ----
+      function onScroll() {
+        var total = runway.offsetHeight - window.innerHeight;
+        var rect = runway.getBoundingClientRect();
+        var p = total > 0 ? -rect.top / total : 0;
+        p = Math.max(0, Math.min(1, p));
+
+        var accel = Math.min(p * FRAME_SPEED, 1);
+        currentFrame = Math.min(Math.floor(accel * FRAME_COUNT), FRAME_COUNT - 1); // frame tracks scroll 1:1
+
+        for (var i = 0; i < phases.length; i++) {
+          var s = parseFloat(phases[i].dataset.start);
+          var e = parseFloat(phases[i].dataset.end);
+          phases[i].classList.toggle("show", p >= s && p <= e);
+        }
+        if (mFrame) mFrame.textContent = String(currentFrame + 1).padStart(3, "0");
+        if (mPct) mPct.textContent = Math.round(p * 100) + "%";
+        if (hint) hint.style.opacity = Math.max(0, 1 - p * 5).toFixed(3);            // scroll cue retires once you begin
+        if (!reduce) canvas.style.transform = "scale(" + (0.992 + accel * 0.014).toFixed(4) + ")"; // subtle push-in
+      }
+
+      // ---- rAF loop: paint only when the scroll-bound frame changes ----
+      function tick() {
+        if (currentFrame !== drawnIndex) { draw(currentFrame); drawnIndex = currentFrame; }
+        requestAnimationFrame(tick);
+      }
+
+      // ---- loading ----
+      function loadFrame(i) {
+        return new Promise(function (resolve) {
+          var img = new Image();
+          img.onload = function () { frames[i] = img; loaded++; resolve(); };
+          img.onerror = function () { loaded++; resolve(); };   // never hang on a missing frame
+          img.src = framePath(i);
+        });
+      }
+      function setLoad(pct) {
+        if (loadBar) loadBar.style.width = pct + "%";
+        if (loadPct) loadPct.textContent = pct + "%";
+      }
+
+      // First frame instantly so the blueprint shows, then batched preload of the rest.
+      loadFrame(0).then(function () {
+        resize();
+        requestAnimationFrame(tick);
+        window.addEventListener("scroll", onScroll, { passive: true });
+        window.addEventListener("resize", resize);
+        onScroll();
+        setLoad(Math.round((loaded / FRAME_COUNT) * 100));
+
+        var BATCH = 18;            // ~saturates the browser's ~6 connections without flooding it
+        (function nextBatch(start) {
+          if (start >= FRAME_COUNT) {
+            setLoad(100);
+            if (loading) loading.classList.add("done");
+            return;
+          }
+          var batch = [];
+          for (var j = start; j < Math.min(start + BATCH, FRAME_COUNT); j++) batch.push(loadFrame(j));
+          Promise.all(batch).then(function () {
+            setLoad(Math.round((loaded / FRAME_COUNT) * 100));
+            nextBatch(start + BATCH);
+          });
+        })(1);
+      });
+    })();
+  </script>
+  <script src="js/catalog.js"></script>
+  <script src="js/search.js"></script>
+</body>
+</html>
