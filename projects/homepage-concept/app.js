@@ -13,9 +13,10 @@
 // Swap this one constant to use a different kie.ai image model.
 const MODEL = "nano-banana-pro";
 
-// If you later add a backend proxy to hide the key, change this base URL to
-// point at your proxy and drop the Authorization header below.
-const KIE_BASE = "https://api.kie.ai/api/v1";
+// Routed through the serverless proxy (/api/kie/*) which holds the kie.ai key
+// server-side, so the key is never exposed in the browser. The Authorization
+// header is added by the proxy — not here.
+const KIE_BASE = "/api/kie";
 
 const ASPECT_RATIO = "16:9";   // desktop homepage feel
 const RESOLUTION = "1K";
@@ -151,10 +152,8 @@ function titleCase(str) {
  * ------------------------------------------------------------------------- */
 
 function authHeaders() {
-  return {
-    Authorization: `Bearer ${CONFIG.KIE_AI_API_KEY}`,
-    "Content-Type": "application/json",
-  };
+  // No Authorization here — the /api/kie proxy injects the real key server-side.
+  return { "Content-Type": "application/json" };
 }
 
 async function createTask(prompt) {

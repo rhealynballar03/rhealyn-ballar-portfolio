@@ -1,6 +1,6 @@
-// config.example.js — committed template.
-// Copy this file to `config.js` and fill in your real kie.ai API key.
-//   cp config.example.js config.js   (then edit config.js)
+// config.js — the real kie.ai key is NOT here. On the deployed site the key is
+// held server-side by the /api/kie proxy (Vercel env var KIE_AI_API_KEY).
+// This sentinel just satisfies the app's "is a key configured?" check.
 const CONFIG = {
-  KIE_AI_API_KEY: ""
+  KIE_AI_API_KEY: "via-proxy"
 };
