@@ -577,8 +577,8 @@
         var thumb = r.thumbnail || r.image || "";
         // Favicon fallbacks are small logos — show them centered, not cover-stretched.
         var isLogo = /s2\/favicons/.test(thumb);
-        // Route thumbnails through the Node image proxy so Reddit/news images load.
-        var src = thumb ? "/img?url=" + encodeURIComponent(thumb) : "";
+        // Route thumbnails through the serverless image proxy so Reddit/news images load.
+        var src = thumb ? "/api/img?url=" + encodeURIComponent(thumb) : "";
         var media = src
           ? '<div class="tf-card__media' + (isLogo ? ' tf-card__media--logo' : '') + '"><img src="' + esc(src) + '" alt="' + esc(title) + '" loading="lazy" referrerpolicy="no-referrer" onerror="this.closest(\'.tf-card\').querySelector(\'.tf-card__media\').outerHTML=\'<div class=&quot;tf-card__media tf-card__media--none&quot;>' + placeholderSvg.replace(/"/g, "&quot;") + '</div>\'" /></div>'
           : '<div class="tf-card__media tf-card__media--none">' + placeholderSvg + '</div>';
